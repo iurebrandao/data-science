@@ -1,0 +1,162 @@
+---
+title: "Disciplina Ciência de Dados Aplicada e Ciência de Dados para Todos"
+output: pdf_document
+fontsize: 11pt
+header-includes:
+   - \setlength\parindent{24pt}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+library(jsonlite)
+library(readxl)
+library(tidyverse)
+```
+
+
+
+
+
+
+
+\hfill Relatório 2
+
+\hfill Autor: Gustavo Henrique Fernandes Carvalho
+
+\hfill Data: 29/04/2018
+
+
+1. **Introdução**
+
+A enorme quantidade de dados que temos a nossa disposição atualmente torna difícil a compreensão e extração de informações úteis, como é o caso dos dados de pesquisadores que estão espalhados em enormes bases.
+
+Tendo isso em vista, esse projeto possui como objetivo analisar e estudar as bases de dados de produção cientifica e da plataforma Lattes de forma a extrair e relacionar informações que atualmente estão dispersas em diferentes bases de dados e inacessíveis aos pesquisadores que podem ter interesse em consultar esses dados.
+
+
+2. **Metodologia**
+
+Nessa etapa do projeto o foco da análise foram os dados do Departamento de Engenharia Elétrica da Universidade de Brasília.
+
+A análise dos dados foi realizado no software RStudio, para importar os dados dos arquivos JSON foi utilizado o pacote *jsonlite*. Para a manipulação e análise dos dados foram utilizados os pacotes *ggplot2* para plotar os dados em gráficos, *dplyr* para organizar os dados e o *tibble* para facilitar a manipulação.
+
+A leitura e limpeza inicial dos dados de cada um dos 4 arquivo é mostrado a seguir.
+
+* *unb.Orientacao.EngEletrica.json* - Dados das Orientações por professores do Departamento de Engenharia Elétrica da UnB.
+```{r echo=TRUE}
+orientacoes <- fromJSON("Data/unb.Orientacao.EngEletrica.json")
+
+orientacoes.tb <- tibble()
+for (i in 1:length(orientacoes[[1]]))
+  orientacoes.tb <- rbind(orientacoes.tb,
+                          orientacoes$ORIENTACAO_CONCLUIDA_POS_DOUTORADO[[i]])
+for (i in 1:length(orientacoes[[1]]))
+  orientacoes.tb <- rbind(orientacoes.tb,
+                          orientacoes$ORIENTACAO_CONCLUIDA_DOUTORADO[[i]])
+for (i in 1:length(orientacoes[[1]]))
+  orientacoes.tb <- rbind(orientacoes.tb,
+                          orientacoes$ORIENTACAO_CONCLUIDA_MESTRADO[[i]])
+for (i in 1:length(orientacoes[[1]]))
+  orientacoes.tb <- rbind(orientacoes.tb,
+                          orientacoes$OUTRAS_ORIENTACOES_CONCLUIDAS[[i]])
+```
+
+* *unb.Perfis.EngEletrica.json* - Dados dos professores do Departamento de Engenharia Elétrica da UnB.
+```{r echo=TRUE}
+perfis <- fromJSON("Data/unb.Perfis.EngEletrica.json")
+
+perfis.tb <- tbl_df(as.data.frame(t(sapply(perfis, rbind))))
+colnames(perfis.tb) <- names(perfis[[1]])
+perfis.tb <- rownames_to_column(perfis.tb, var = "lattes")
+```
+
+* *unb.Pub.EngEletrica.json* - Publicações de professores do Departamento de Engenharia Elétrica da UnB.
+```{r echo=TRUE}
+publicacoes <- fromJSON("Data/unb.Pub.EngEletrica.json")
+
+periodicos.tb <- tibble()
+for (i in 1:length(publicacoes$PERIODICO))
+  periodicos.tb <- rbind(periodicos.tb, publicacoes$PERIODICO[[i]])
+```
+
+* *unb.BDTD.json* - Dados sobre teses e dissertações de toda a UnB.
+```{r echo=TRUE}
+bdtd <- fromJSON("Data/unb.BDTD.json")
+
+bdtd.tb <- as.tibble(bdtd$response$docs)
+bdtd.tb$author <- unlist(bdtd.tb$author)
+```
+
+
+
+
+3. **Resultados**
+
+Primeiramente foi analisado o arquivo *unb.Orientacao.EngEletrica.json*, nele temos informações de todos as orientações de iniciação cientifica, graduação, mestrado e doutorado, tanto os concluídos como os em andamento em cada ano entre 2010 e 2017. Nessa primeira análise iremos utilizar as informações apenas das orientações concluídas, pois as que estão em andamento podem aparecer em dois anos diferentes dependendo do tempo da orientação.
+
+Com os dados de todas orinteções concluidas por ano no Departamento de Engenharia Eletrica e com o gráfico a seguir, podemos observar que houve um aumento no número de conclusões entre 2010 e 2013 e uma resução entre 2013 e 2017.
+
+
+```{r echo=TRUE}
+ggplot(orientacoes.tb, aes(x = ano, fill = bolsa)) +
+  geom_bar(stat="count") +
+  labs(x="Ano",
+       y="Conclusões de Orientação",
+       title="Número de Conclusões de Orientação por Ano")
+```
+Também podemos observar que o número de bolsas de projeto acompanhou o número de projetos, mantendo a porcentangem de bolsas similar nos diferentes anos.
+
+Agora além dos dados do arquivo *unb.Orientacao.EngEletrica.json*, também é utilizado os dados do arquivo *unb.Perfis.EngEletrica.json*. Uma inforação que podemos obter a partir desses dados é a proporção de alunos dos diferentes cursos do Departamento de Engenharia Elétrica que concluiram um projeto orientado.
+
+Em nossa anáilise foram utilizados os dados dos alunos que completaram a graduação em cada ano entre 2010 e 2017 e seus respectivos cursos, gerando o gráfico a seguir.
+
+```{r echo=TRUE}
+orientacoes.graduacao <-
+  filter(orientacoes.tb, natureza == "TRABALHO_DE_CONCLUSAO_DE_CURSO_GRADUACAO")
+
+orientacoes.graduacao$curso <-
+  iconv(tolower(orientacoes.graduacao$curso),to="ASCII//TRANSLIT")
+
+orientacoes.graduacao <-
+  filter(orientacoes.graduacao, curso == "engenharia eletrica" |
+                                curso == "engenharia mecatronica" |
+                                curso == "engenharia de redes de comunicacoes" |
+                                curso == "engenharia de computacao")
+
+ggplot(orientacoes.graduacao, aes(x = ano, fill = curso)) +
+  geom_bar(stat="count") +
+  labs(x="Ano",
+       y="Conclusões de Orientação",
+       title="Número de Conclusões de Orientação de Cada Curso por Ano")
+```
+
+A partir dos perfis dos professores podemos temos obter várias informações sobre as áreas de pesquisa, formação e interesse de cada professor. Na análise mostrada no gráfico a seguir são mostrados as 8 sub-áreas de pesquisa mais comuns dos professores do Departamento de Engenharia Elétrica.
+
+```{r echo=TRUE}
+sub_area <-
+  unlist(
+    tbl_df(as.data.frame(t(sapply(perfis.tb$areas_de_atuacao, rbind))))$sub_area)
+sub_area <- unlist(strsplit(sub_area, ", "))
+sub_area <- table(sub_area)
+sub_area <-
+  head(arrange(filter(as.data.frame(sub_area), sub_area != ""), desc(Freq)), 8)
+
+ggplot(sub_area, aes(x = sub_area, y = Freq)) +
+  geom_bar(stat="identity") +
+  coord_flip() +
+  labs(x="Número de pesquisadores",
+       y="Sub-área")
+```
+
+
+
+
+
+
+3. **Conclusão**
+
+A partir das análises realizadas pudemos estrair várias informações sobre os projetos realizados e orientados pelos professores do departamento de Engenharia Elétrica como a proporção de alunos de cada curso que fazem projetos com professores da Elétrica, as sub-áreas de pesquisa mais comuns.
+
+O dado que achei mais interesante extraido dessa análise foi que houve uma grande redução de bolsas e de pesquisa a partir de 2013 e apenas em 2016 o número de pesquisas voltou a subir, isso provavelmente se deve a falta de verba para a UnB nos últimos anos.
