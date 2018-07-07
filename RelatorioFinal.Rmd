@@ -188,53 +188,7 @@ Se de um lado a promoção do conhecimento gerado predominantemente nas ditas ci
 
 Não há solução simples, mas postula-se, nesta disciplina, que uma maior agilidade na avaliação e a utilização de critérios mais objetivos, poderá facilitar a melhoria do sistema.
 
-###Os Colégios, Grandes Áreas e Áreas da Pós-Graduação Brasileira
 
-A partir de 2018, as diversas áreas da pós-graduação brasileira foram organizadas na forma de colégios, grandes áreas e áreas, conforme apresentam as tabelas a seguir.
-
-####Colégio de Ciências da vida
-
-CIÊNCIAS AGRÁRIAS| CIÊNCIAS BIOLÓGICAS| CIÊNCIAS DA SAÚDE
--|-|-
-Ciência de Alimentos |Biodiversidade |Educação Física
-Ciências Agrárias I |Ciências Biológicas I |Enfermagem
-Medicina Veterinária |Ciências Biológicas II |Farmácia
-Zootecnia / Recursos Pesqueiros |Ciências Biológicas III |Medicina I
-- |- |Medicina II
-- |- |Medicina III
-- |- |Nutrição
-- |- |Odontologia
-- |- |Saúde Coletiva
-
-
-####Colégio de Ciências Exatas, Tecnológicas e Multidisciplinar
-
-CIÊNCIAS EXATAS E DA TERRA|ENGENHARIAS|MULTIDISCIPLINAR
--|-|-
-Astronomia / Física |Engenharias I |Biotecnologia
-Ciência da Computação |Engenharias II |Ciências Ambientais
-Geociências |Engenharias III |Ensino
-Matemática / Probabilidade e Estatística |Engenharias IV |Interdisciplinar
-Química | - |Materiais
-
-
-####Colégio de Humanidades
-
-
-CIÊNCIAS HUMANAS | CIÊNCIAS SOCIAIS APLICADAS | LINGUÍSTICA, LETRAS E ARTES
--|-|-
-Antropol/Arqueol | Admin.Púb./Empr.,C.Contáb. e Tur.|Artes
-Ciência Pol. e Rel. Int. |Arquit., Urban. e Design | Linguística e Literatura
-Ciências da Religião e Teol. |Comunicação e Informação|-
-Educação |Direito|-
-Filosofia |Economia|-
-Geografia |Planej. Urbano e Reg. / Demografia|-
-História |Serviço Social |-
-Psicologia|-|-
-Sociologia|-|-
-
-Cada um desses colégios, grandes áreas e áreas de conhecimento possuem dinâmicas próprias, e, portanto, não há um modelo universal que se aplique a todas.
-Existem aspectos comuns, mas também grandes peculiaridades, descritas parcialmente nos correspondentes documentos de área disponíveis em CAPES (2018).
 
 ##A UnB dentro do Sistema Nacional de Pós-Graduação (Contextualização)
 
@@ -408,58 +362,76 @@ Uma breve inspeção visual dos atributos do curso de Direito anteriormente apre
 * Atua predominantemente na área de direito.
 * Trabalha na Faculdade de Direito da UnB.
 
-####Potencial de utilização dos dados do perfil dos docentes
-
-Esses dados terão potencial para responder às questões de _data mining_?
-O que é possível gerar a partir desses dados, para o conjunto dos 1592 docentes da UnB?
-A fim de compreender a relevância dos dados para a avaliação da produção acadêmica nas pós-graduações brasileiras pode-se recorrer a trabalhos como os seguintes:
-
-* Leite (2018) apresenta, em suas "Considerações básicas sobre  a Avaliação do Sistema  Nacional de Pós-Graduação", o conjunto dos itens que são tópicos de avaliação das pós-graduações pela CAPES, e que envolvem, entre outros:
-    + Avaliação do corpo docente, com 20% a 30% de peso na avaliação total do programa, a depender do seu tipo. Analisando-se de forma mais detalhada os critérios de avaliação do corpo docente, indicados por Leite, o que é possível gerar com base nos dados disponíveis em unb.prof? Há dados que permitam identificar o perfil do docente, como proposto pela CAPES, inclusive no documento de área específica na qual atua o pesquisador? Que outros aspectos relevantes para a CAPES podem ser levantados com base nos dados dessa fonte?
-    + Avaliação do corpo discente, Teses e dissertações, com 30% a 20% de peso na avaliação total do programa, a depender de seu tipo. Os dados sobre orientação permitem fazer quais tipos de avaliações do corpo discente?
-    + Avaliação da produção intelectual, com 40% de peso na avaliação total. Qual a relevância dos dados em unb.prof para essa avaliação? Que outros arquivos podem melhor subsidiar essa avaliação?
-* Em busca de considerar outros fatores relevantes para a avaliação da pós-graduação, não considerados no modelo da CAPES, pode-se recorrer ao trabalho de Kalpazidou Schmidt e Graversen (2018), que apresentam um conjunto de fatores persistentes que facilitam a existência de ambientes de pesquisa inovadores e dinâmicos, dentre os quais se destaca:
-    + Atividade em pesquisas com elevado grau de impacto social;
-    + Promoção de elevado grau de autonomia individual, tanto do ponto de vista teórico quanto metodológico;
-    + Possuem um bom clima de trabalho, baseado no trabalho em times;
-    + São internacioinalmente bem conhecidas etc.
-    
-    Estariam esses fatores contemplados, de alguma forma, memso que parcialmente, nos dados presentes em unb.prof? Ou em qualquer outros dos arquivos? Cabe explorar.
-
-###Descrição dos dados de orientações
+###Descrição dos dados de orientações de Ciência da Informação
 
 ```{r}
-unb.adv <- fromJSON("data/unbpos.advise.json")
-names(unb.adv)
-names(unb.adv$ORIENTACAO_CONCLUIDA_DOUTORADO)
-length(unb.adv$ORIENTACAO_CONCLUIDA_DOUTORADO$`2016`$natureza)
-head(sort(table(unb.adv$ORIENTACAO_CONCLUIDA_DOUTORADO$`2017`$curso), decreasing = TRUE), 10)
-head(sort(table(unb.adv$ORIENTACAO_CONCLUIDA_MESTRADO$`2017`$curso), decreasing = TRUE), 10)
+unb.adv_ci <- fromJSON("data/CI.advise.json")
+names(unb.adv_ci)
+names(unb.adv_ci$ORIENTACAO_CONCLUIDA_DOUTORADO)
+length(unb.adv_ci$ORIENTACAO_CONCLUIDA_DOUTORADO$`2016`$natureza)
+head(sort(table(unb.adv_ci$ORIENTACAO_CONCLUIDA_DOUTORADO$`2017`$curso), decreasing = TRUE), 10)
+head(sort(table(unb.adv_ci$ORIENTACAO_CONCLUIDA_MESTRADO$`2017`$curso), decreasing = TRUE), 10)
 ```
 
 
-###Descrição dos dados de produção bibliográfica
+###Descrição dos dados de orientações de Comunicação
+
 ```{r}
-unb.pub <- fromJSON("data/unbpos.publication.json")
-names(unb.pub)
-names(unb.pub$PERIODICO$`2012`)
-head(sort(table(unb.pub$PERIODICO$`2017`$periodico), decreasing = TRUE), 10)
-head(sort(table(unb.pub$LIVRO$`2015`$nome_da_editora), decreasing = TRUE), 10)
+unb.adv_comunicacao <- fromJSON("data/Comunicacao.advise.json")
+names(unb.adv_comunicacao)
+names(unb.adv_comunicacao$ORIENTACAO_CONCLUIDA_DOUTORADO)
+length(unb.adv_comunicacao$ORIENTACAO_CONCLUIDA_DOUTORADO$`2016`$natureza)
+head(sort(table(unb.adv_comunicacao$ORIENTACAO_CONCLUIDA_DOUTORADO$`2017`$curso), decreasing = TRUE), 10)
+head(sort(table(unb.adv_comunicacao$ORIENTACAO_CONCLUIDA_MESTRADO$`2017`$curso), decreasing = TRUE), 10)
 ```
 
 
-###Descrição dos dados de agregação de docentes por área
+###Descrição dos dados de orientações de Direito
+
 ```{r}
-unb.area <- fromJSON("data/unbpos.researchers_by_area.json")
-unb.area.df <- cbind(names(unb.area$`Areas dos pesquisadores`),
-           (sapply(unb.area$`Areas dos pesquisadores`, function(x) length(x))))
-rownames(unb.area.df) <- c(1:nrow(unb.area.df)); colnames(unb.area.df) <- c("Area", "Professores")
-glimpse(unb.area.df)
-head(unb.area.df[])
+unb.adv_direito <- fromJSON("data/Direito.advise.json")
+names(unb.adv_direito)
+names(unb.adv_direito$ORIENTACAO_CONCLUIDA_DOUTORADO)
+length(unb.adv_direito$ORIENTACAO_CONCLUIDA_DOUTORADO$`2016`$natureza)
+head(sort(table(unb.adv_direito$ORIENTACAO_CONCLUIDA_DOUTORADO$`2017`$curso), decreasing = TRUE), 10)
+head(sort(table(unb.adv_direito$ORIENTACAO_CONCLUIDA_MESTRADO$`2017`$curso), decreasing = TRUE), 10)
 ```
 
 
-###Descrição dos dados de redes de colaboração
+
+###Descrição dos dados de produção bibliográfica de Ciência da Informação
+```{r}
+unb.pub_ci <- fromJSON("data/CI.publication.json")
+names(unb.pub_ci)
+names(unb.pub_ci$PERIODICO$`2012`)
+head(sort(table(unb.pub_ci$PERIODICO$`2017`$periodico), decreasing = TRUE), 10)
+head(sort(table(unb.pub_ci$LIVRO$`2015`$nome_da_editora), decreasing = TRUE), 10)
+```
+
+
+###Descrição dos dados de produção bibliográfica de Comunicação
+```{r}
+unb.pub_comunicacao <- fromJSON("data/Comunicacao.publication.json")
+names(unb.pub_comunicacao)
+names(unb.pub_comunicacao$PERIODICO$`2012`)
+head(sort(table(unb.pub_comunicacao$PERIODICO$`2017`$periodico), decreasing = TRUE), 10)
+head(sort(table(unb.pub_comunicacao$LIVRO$`2015`$nome_da_editora), decreasing = TRUE), 10)
+```
+
+
+###Descrição dos dados de produção bibliográfica de Direito
+```{r}
+unb.pub_direito <- fromJSON("data/Direito.publication.json")
+names(unb.pub_direito)
+names(unb.pub_direito$PERIODICO$`2012`)
+head(sort(table(unb.pub_direito$PERIODICO$`2017`$periodico), decreasing = TRUE), 10)
+head(sort(table(unb.pub_direito$LIVRO$`2015`$nome_da_editora), decreasing = TRUE), 10)
+```
+
+
+
+
+
 
 
 ##CRISP-DM Fase.Atividade 2.3 - Análise exploratória dos dados
@@ -471,72 +443,30 @@ O relatório final deve conter análises exploratórias dos dados que sejam sign
 
 ###Arquivo Profile
 
+Com esta função abaixo é possível visualizar a estrutura do arquivo de perfis dos 3 cursos e assim possibilitando um entendimento mais profundo da relação estatística existente entre os dados dos datasets para melhor entender a qualidade desses dados e alcançar o objetivo do projeto.
+
 ```{r}
-# jsonedit(unb.prof)
-# Número de áreas de atuação cumulativo
-sum(sapply(unb.prof, function(x) nrow(x$areas_de_atuacao)))
-# Número de áreas de atuação por pessoa
-table(unlist(sapply(unb.prof, function(x) nrow(x$areas_de_atuacao))))
-# Número de pessoas por grande area
-table(unlist(sapply(unb.prof, function(x) (x$areas_de_atuacao$grande_area))))
-# Número de pessoas que produziram os específicos tipos de produção
-table(unlist(sapply(unb.prof, function(x) names(x$producao_bibiografica))))
-# Número de publicações por tipo
-sum(sapply(unb.prof, function(x) length(x$producao_bibiografica$ARTIGO_ACEITO$ano)))
-sum(sapply(unb.prof, function(x) length(x$producao_bibiografica$CAPITULO_DE_LIVRO$ano)))
-sum(sapply(unb.prof, function(x) length(x$producao_bibiografica$LIVRO$ano)))
-sum(sapply(unb.prof, function(x) length(x$producao_bibiografica$PERIODICO$ano)))
-sum(sapply(unb.prof, function(x) length(x$producao_bibiografica$TEXTO_EM_JORNAIS$ano)))
-# Número de pessoas por quantitativo de produções por pessoa 0 = 1; 1 = 2...
-table(unlist(sapply(unb.prof, function(x) length(x$producao_bibiografica$ARTIGO_ACEITO$ano))))
-table(unlist(sapply(unb.prof, function(x) length(x$producao_bibiografica$CAPITULO_DE_LIVRO$ano))))
-table(unlist(sapply(unb.prof, function(x) length(x$producao_bibiografica$LIVRO$ano))))
-table(unlist(sapply(unb.prof, function(x) length(x$producao_bibiografica$PERIODICO$ano))))
-table(unlist(sapply(unb.prof, function(x) length(x$producao_bibiografica$TEXTO_EM_JORNAIS$ano))))
-# Número de produções por ano
-table(unlist(sapply(unb.prof, function(x) (x$producao_bibiografica$ARTIGO_ACEITO$ano))))
-table(unlist(sapply(unb.prof, function(x) (x$producao_bibiografica$CAPITULO_DE_LIVRO$ano))))
-table(unlist(sapply(unb.prof, function(x) (x$producao_bibiografica$LIVRO$ano))))
-table(unlist(sapply(unb.prof, function(x) (x$producao_bibiografica$PERIODICO$ano))))
-table(unlist(sapply(unb.prof, function(x) (x$producao_bibiografica$TEXTO_EM_JORNAIS$ano))))
-# Número de pessoas que realizaram diferentes tipos de orientações
-length(unlist(sapply(unb.prof, function(x) names(x$orientacoes_academicas))))
-# Número de pessoas por tipo de orientação
-table(unlist(sapply(unb.prof, function(x) names(x$orientacoes_academicas))))
-#Número de orientações concluidas
-sum(sapply(unb.prof, function(x) length(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_MESTRADO$ano)))
-sum(sapply(unb.prof, function(x) length(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_DOUTORADO$ano)))
-sum(sapply(unb.prof, function(x) length(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_POS_DOUTORADO$ano)))
+# Estrutura do arquivo de perfis de ciências da informaçao
+names(unb.prof_ci$`1923828283438124`)
 
-# Número de pessoas por quantitativo de orientações por pessoa 0 = 1; 1 = 2...
-table(unlist(sapply(unb.prof, function(x) length(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_MESTRADO$ano))))
-table(unlist(sapply(unb.prof, function(x) length(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_DOUTORADO$ano))))
-table(unlist(sapply(unb.prof, function(x) length(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_POS_DOUTORADO$ano))))
+# Estrutura do arquivo de perfis de comunicação
+names(unb.prof_comunicacao$`0796700383761856`)
 
-# Número de orientações por ano
-table(unlist(sapply(unb.prof, function(x) (x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_MESTRADO$ano))))
-table(unlist(sapply(unb.prof, function(x) (x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_DOUTORADO$ano))))
-table(unlist(sapply(unb.prof, function(x) (x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_POS_DOUTORADO$ano))))
-
+# Estrutura do arquivo de perfis de direito
+names(unb.prof_direito$`1540773562032795`)
 ```
+
 
 ###Arquivo Publicação
-```{r}
-# Visualizar a estrutura do arquivo de Publicacao
-#jsonedit(unb.pub)
-#Criando um data-frame com todos os anos
-unb.pub.df <- data.frame()
-for (i in 1:length(unb.pub[[1]]))
-  unb.pub.df <- rbind(unb.pub.df, unb.pub$PERIODICO[[i]])
-glimpse(unb.pub.df)
-# Limpando o data-frame de listas
-unb.pub.df$autores <- gsub("\",\"|\", \"", "; ", unb.pub.df$autores)
-unb.pub.df$autores <- gsub("\"|c\\(|\\)", "", unb.pub.df$autores)
-unb.pub.df$`autores-endogeno` <- gsub(",", ";", unb.pub.df$`autores-endogeno`)
-unb.pub.df$`autores-endogeno` <- gsub("\"|c\\(|\\)", "", unb.pub.df$`autores-endogeno`)
-glimpse(unb.pub.df)
 
+A estrutura dos arquivos de publicações é a mesma para os 3 cursos, com a funçao abaixo é possível visualizar um exemplo dessa estrutura para o arquivo de publicações do curso de Ciência da Informação.
+
+```{r}
+# Estrutura do arquivo de perfis de ciências da informaçao
+names(unb.pub_ci)
+names(unb.pub_ci$PERIODICO)
 ```
+
 
 ###Arquivo Orientação
 ```{r}
