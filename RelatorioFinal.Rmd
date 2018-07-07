@@ -306,97 +306,107 @@ Doravante, a fim de facilitar aos alunos seguirem a metodologia CRISP-DM, os nom
 Todos os arquivos com dados iniciais a seguir apresentados foram fornecidos pelos professores responsáveis pela disciplina. Os dados foram gerados no mês de maio de 2018, e compilam informações entre os anos de 2010 e 2017. 
 Os arquivos estão no formato JSON, e seus atributos iniciais e conteúdos são apresentados a seguir.
 
-###Perfil profissional dos docentes vinculados às pós-graduações
+###Perfil profissional dos docentes vinculados às pós-graduações do curso de direito, comunicação e ciência da informação
 
 ```{r}
-setwd("~/Documents/eLattes/UNB/CD4A")
-json.perfil <- "data/unbpos.profile.json"
-file.info(json.perfil)
+json.perfil_ci <- "data/CI.profile.json"
+file.info(json.perfil_ci)
+
+json.perfil_comunicacao <- "data/Comunicacao.profile.json"
+file.info(json.perfil_comunicacao)
+
+json.perfil_direito <- "data/Direito.profile.json"
+file.info(json.perfil_direito)
 ```
 
-O arquivo `r json.perfil` apresenta dados sobre o perfil de todos os docentes vinculados a programas de pós-graduação da UnB, entre 2010 e 2017. 
+Os arquivos "CI.profile.json", "Comunicacao.profile.json" e "Direito.profile.json" apresentam dados sobre o perfil de todos os docentes vinculados a programas de pós-graduação da UnB, entre 2010 e 2017, nos cursos citados anteriormente. 
+
 Esse arquivo foi fornecido pelos docentes responsáveis pela disciplina.
 
 ###Orientações de mestrado e doutorado realizadas pelos docentes vinculados às pós-graduações
 
 ```{r}
-json.advise <- "data/unbpos.advise.json"
-file.info(json.advise)
+json.advise_ci <- "data/CI.advise.json"
+file.info(json.advise_ci)
+
+json.advise_comunicacao <- "data/Comunicacao.advise.json"
+file.info(json.advise_comunicacao)
+
+json.advise_direito <- "data/Direito.advise.json"
+file.info(json.advise_direito)
 ```
 
-O arquivo `r json.advise` apresenta dados sobre o orientações de mestrado e doutorado feitas por todos os docentes vinculados a programas de pós-graduação da UnB, entre 2010 e 2017. 
+Os arquivos "CI.advise.json", "Comunicacao.advise.json" e "Direito.advise.json" apresentam dados sobre o orientações de mestrado e doutorado feitas por todos os docentes vinculados a programas de pós-graduação da UnB, entre 2010 e 2017, dos cursos citados na seção anterior. 
+
 Esse arquivo foi fornecido pelos docentes responsáveis pela disciplina.
 
 
 ###Produção bibliográfica gerada pelos docentes vinculados às pós-graduações
 
 ```{r}
-json.producao.bibliografica <- "data/unbpos.publication.json"
-file.info(json.producao.bibliografica) 
+json.producao.bibliografica_ci <- "data/CI.publication.json"
+file.info(json.producao.bibliografica_ci) 
+
+json.producao.bibliografica_comunicacao <- "data/Comunicacao.publication.json"
+file.info(json.producao.bibliografica_comunicacao) 
+
+json.producao.bibliografica_direito <- "data/Direito.publication.json"
+file.info(json.producao.bibliografica_direito) 
 ```
 
-O arquivo `r json.producao.bibliografica` apresenta dados sobre a produção bibliográfica gerada por todos os docentes vinculados a programas de pós-graduação da UnB, entre 2010 e 2017. 
+Os arquivos "CI.advise.json", "Comunicacao.advise.json" e "Direito.advise.json" apresentam dados sobre a produção bibliográfica gerada por todos os docentes vinculados a programas de pós-graduação da UnB, entre 2010 e 2017, dos cursos citados na seção anterior. 
 
-###Agrupamento dos docentes conforme áreas de atuação
-
-```{r}
-json.researchers_by_area <- "data/unbpos.researchers_by_area.json" 
-file.info(json.researchers_by_area)
-```
-
-O arquivo `r json.researchers_by_area` apresenta as vinculações de todos os docentes que declararam atuar em cada uma das áreas de pós-graduação do Sistema Nacional de Pós-Graduação da CAPES, conforme apresenta-se registrada essa informação no currículo Lattes de cada um, em data recente. 
-
-```{r}
-file.info('data/unbpos.graph.json')
-```
-
-###Redes de colaboração entre docentes
-
-O arquivo data/unbpos.graph.json apresenta redes de colaboração na co-autoria de artigos cientpificos, feitas entre os docentes vinculados a programas de pós-graduação da UnB, entre 2010 e 2017.
 
 ##CRISP-DM Fase.Atividade 2.2 - Descrição dos Dados
-
-Para ler e manipular inicialmente esses dados, serão usadas primordialmente as bibliotecas seguintes 
-
-```{r library-load}
-library(jsonlite)
-library(listviewer)
-library(readxl)
-library(readr)
-library(readtext)
-library(ggplot2)
-library(tidyverse)
-```
 
 Como já informado, a descrição dos dados verifica se os dados sendo acessados terão potencial para responder às questões de _data mining_. Além disso, deve-se avaliar qual o volume de dados, a estrutura dos dados (tipos), codificações usadas, etc. Neste projeto, a descrição dos dados é responsabilidade parcial dos alunos, tendo em vista que esta seção já oferece uma descrição inicial simplificada. O relatório final deve conter descrições significativas e aprofundadas dos dados.
 
 ###Descrição dos dados do perfil
 
-O arquivo unb.perfis.json, que contém dados que caracterizam o perfil profissional de todos os docentes do grupo sob análise, podem ser lido por meio do comando seguinte.
+OS arquivoS "CI.profile.json","Comunicacao.profile.json" e "Direito.profile.json" que contém dados que caracterizam o perfil profissional de todos os docentes do grupo, dos 3 cursos, sob análise, podem ser lido por meio do comando seguinte.
 
 ```{r}
-unb.prof <- fromJSON("data/unbpos.profile.json")
+unb.prof_ci <- fromJSON("data/CI.profile.json")
+unb.prof_comunicacao <- fromJSON("data/Comunicacao.profile.json")
+unb.prof_direito <- fromJSON("data/Direito.profile.json")
 ```
 
-A quantidade de docentes sob análise é apresentada a seguir.
+A quantidade de docentes de cada curso, sob análise, é apresentada a seguir.
 ```{r}
-length(unb.prof)
+length(unb.prof_ci)
+length(unb.prof_comunicacao)
+length(unb.prof_direito)
 ```
 
-Para gerar uma apresentação inicial dos dados que estão contido nos dados de perfil dos docentes, pode-se usar a função glimpse, da biblioteca dplyr, como ilustra o código seguinte, que apresenta os atributos típicos que podem ser obtidos relativamente a um pesquisador específico, o mais antigo docente ainda em exercício na UnB a ter criado seu registro na plataforma Lattes.
+Para gerar uma apresentação inicial dos dados que estão contido nos dados de perfil dos docentes de cada curso, pode-se usar a função glimpse, da biblioteca dplyr, como ilustra o código seguinte, que apresenta os atributos típicos que podem ser obtidos relativamente a um pesquisador específico, o mais antigo docente ainda em exercício na UnB a ter criado seu registro na plataforma Lattes.
 
 ```{r}
 library(dplyr) 
-glimpse(unb.prof[[1]], width = 30)
+glimpse(unb.prof_ci[[1]], width = 30)
 ```
 
-Uma breve inspeção visual dos atributos anteriormente apresentados permite inferir que o pesquisador sob análise:
+Uma breve inspeção visual dos atributos do curso de ciência da informação anteriormente apresentados permite inferir que o pesquisador sob análise:
 
-* Atua predominantemente na área de matemática.
-* Trabalha no Instituto de Ciências Exatas da UnB.
-* Possui três artigos recentes publicados, além de um aceito para publicação.
-* Possui uma orientação de doutorado em andamento, iniciada em 2014.
-* Foi classificado com senioridade 5.
+* Atua predominantemente nas áreas de arquivologia, museologia e biblioteoconomia.
+* Trabalha no Instituto de Ciência de Informação da UnB.
+
+```{r}
+glimpse(unb.prof_comunicacao[[1]], width = 30)
+```
+
+Uma breve inspeção visual dos atributos do curso de Comunicação anteriormente apresentados permite inferir que o pesquisador sob análise:
+
+* Atua predominantemente nas áreas de comunicação visual e jornalismo.
+* Trabalha no Instituto de Comunicação da UnB.
+
+```{r}
+glimpse(unb.prof_direito[[1]], width = 30)
+```
+
+Uma breve inspeção visual dos atributos do curso de Direito anteriormente apresentados permite inferir que o pesquisador sob análise:
+
+* Atua predominantemente na área de direito.
+* Trabalha na Faculdade de Direito da UnB.
 
 ####Potencial de utilização dos dados do perfil dos docentes
 
