@@ -1,8 +1,8 @@
 ---
 title:  Ciência de Dados para Todos (Data Science
-  For All) - 2018.1 - Análise da Produção Científica e Acadêmica da Universidade de Brasília - Modelo de Relatório Final da Disciplina - Departamento de Ciência da Computação da UnB
-author: "Jorge H. C. Fernandes, Ricardo B. Sampaio, João Ribas de Moura e Jerônimo A. Filho"
-date: "11/06/2018"
+  For All) - 2018.1 - Análise da Produção Científica e Acadêmica da Universidade de Brasília - Relatório Final da Disciplina - Departamento de Ciência da Computação da UnB
+author: "Gustavo Henrique Fernandes Carvalho, Heron Trindade Fonseca e Iure Vieira Brandão"
+date: "07/07/2018"
 output:
   pdf_document: default
   html_document:
@@ -15,54 +15,63 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introdução
 
-Este documento apresenta um modelo básico para a construção do relatório final da disciplina Tópicos Avançados em Computadores - Turma D - 2018.1, do Departamento de Ciência da Computação da Universidade de Brasília, que trata da análise da produção científica e acadêmica na Universidade de Brasília, em uma ou mais áreas de conhecimento.   
+A ciência de dados, cada vez mais, ganha espaço e importância no âmbito tecnológico por ser uma área que pode agregar uma quantidade de informações à qualquer área muito interessante. É como disse o Jeff Weiner, CEO do LinkedIn, “Os dados realmente impulsionam tudo o que fazemos”. 
 
-A metodologia para desenvolvimento do relatório é baseada no modelo de mineração de dados denominado CRISP-DM (Chapman et al., 2000, Mariscal et al., 2010). 
+A enorme quantidade de dados que temos a nossa disposição atualmente torna difícil a compreensão e extração de informações úteis, como é o caso dos dados de pesquisadores que estão espalhados em enormes bases.
 
-Este documento deve ser referenciado do modo como aparece na seção de referências ao final do texto, abaixo reproduzida.
+E devido à grande quantidade de informação que se é obtida nos dias atuais, surgiu um campo da ciência responsável por tratar esse conhecimento que é adquirido e armazenado. Essa área responsável pelo tratamento de dados é conhecida como Ciência de Dados, que combina Big Data com mineração de dados, de modo que grandes quantidade de informações sejam tratadas a fim de identificar padrões, regras, relacionamentos ou apenas para poder analisar esses dados de uma maneira mais clara.
 
-Fernandes, Jorge H C, Ricardo Barros Sampaio, e João Ribas de Moura. “Ciência de Dados para Todos (Data Science   For All) - 2018.1 - Análise da Produção Científica e Acadêmica da Universidade de Brasília - Modelo de Relatório Final da Disciplina - Departamento de Ciência da Computação da UnB”. Disciplina 116297 - Tópicos Avançados em Computadores, turma D, do semestre 2018.1, do Departamento de Ciência da Computação do Instituto de Ciências Exatas da Universidade de Brasília, 13 de junho de 2018.
+Então, a partir de toda essa base que a ciência de dados nos dá e nos proporciona, foi analisado dados de currículos lattes dos professores da Universidade de Brasília, mais especificamente do curso de Comunicação, afim de avaliar a produção científica deles, contextualizar e realizar uma primeira análise sobre o programa de pós-graduação dos cursos de Direito, Ciência da Informação e Comunicação.
 
 
-#CRISP-DM (Corresponderia à seção de Metodologia)
 
-Para desenvolvimento do trabalho devem ser seguidos, da forma mais simplificada e coerente possível, as fases e atividades genéricas do ciclo de vida de um projeto executado em aderência ao CRISP-DM, conforme ilustra de forma geral a figura 1. Em outras palavras, a produção do relatorio deve seguir a metodologia CRISP-DM.
+#CRISP-DM
 
-![Fases do Ciclo de Vida do CRISM-DM. Fonte: (Chapman et al., 2000).](CRISP-DM)
+A metodologia utilizada no processamento dos dados foi a Cross Industry Standard Process for Data Mining (CRISP-DM), que consiste em um fluxo de processamento de dados que está sendo muito utilizado no processamento de Big Data por normalmente ajudar na geração de bons resultados de mineração de dados.
 
-Perceba que a Figura 1 sugere haver grande flexibilidade na execução das fases, de modo que se pode retornar a fases anteriores em muitos pontos.
+As ferramentas utilizadas na analise e tratamento dos dados foram a linguagem R e o RStudio, com as bibliotecas seguintes bibliotecas:
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE}
+library(jsonlite)
+library(dplyr)
+library(ggplot2)
+library(tibble)
+library(knitr)
+library(kableExtra)
+```
 
-"A widely used methodology for data mining is the CRoss-Industry Standard Process for Data Mining (CRISP-DM) which mas initiated in 1996 (…) with the intent of providing a process that is __reliable and repeatable__ by people with little data-mining background, with a framework within which experience can be recorded, to support the replication of projects, to support planning and management, as well as to demonstrate data mining as a mature discipline (…)" [Sullivan, Rob. Introduction to Data Mining for the Life Sciences. Springer Science & Business Media. 2012]
+![Fluxo de processo do CRISP-DM](CRISPDM.png)
 
-O seu trabalho deve conter uma seção metodologia, onde você faz uma breve descrição da metodologia que seu grupo adotou para realização do trabalho, que pode ser baseada no texto dessa seção, desde que citado adequadamente.
+Como podemos observar na Figura 1, o fluxo de mineração de dados seguindo a metodologia CRISP-DM é dividido em seis etapas, descritas individualmente a seguir assim como elas foram aplicadas nesse projeto.
 
-## Delimitações iniciais
-Em aderência à estrutura do CRISP-DM, algumas delimitações de contexto para o trabalho são apresentadas a seguir:
+A. *Entendimento do negócio*
 
-###Domínio de Aplicação do projeto
-O domínio de aplicação do projeto é o da produção científica e acadêmica brasileira, mais específicamente a produção científica ou produção acadêmica de um subgrupo de pesquisadores vinculados à Universidade de Brasília. O domínio de aplicação do projeto deve ser declarado na introdução ao relatório.
+É nessa etapa que o profissional que estará analisando os dados deve procurar conhecer mais a respeito do ambiente no qual os dados foram obtidos para entender melhor o real significado dos dados que serão trabalhados.
 
-<!--registrada na [base de currículos Lattes](lattes.cnpq.br), do CNPq.-->
+Nesse projeto essa etapa consistiu em uma pesquisa a respeito dos cursos de Direito, Ciência da Informação e Comunicação na universidade de Brasília e a conversa com por e-mail com professores dos cursos.
 
-###Tipo de Problema abordado
+B. *Compreensão dos dados*
 
-O tipo de problema abordado é o da produção de análises descritivas, quantitativas e de modelagem computacional ou estatística, que permitam caracterizar como e porque ocorre a produção científica e acadêmica de um grupo de pesquisadores. Essa caracterização visa subsidiar a tomada de decisão por membros do Sistema Nacional de Pós-Graduação. O tipo de problema abordado no projeto deve ser declarado na introdução ao relatório.
+Nessa segunda etapa o objetivo é inspecionar, organizar e conhecer quais dados temos a nossa disposição para análise.
 
-###Conjunto de Ferramentas e Técnicas
+A bases de dados que serão utilizadas nesse projeto são a OASIS, BDTD e de publicações dos cursos mencionados acima.
 
-O conjunto de requisitos relativos a ferramentas e técnicas a serem empregadas na execução do trabalho é:
 
-* O relatório deve ser entregue no formato R Markdown, apto à geração de saída \LaTeX e PDF, composto por comandos em R entremeados por descrições textuais que auxiliem na interpretação dos resultados, bem como na compreensão do domínio de conhecimento sob análise.
-* As análises descritivas devem empregar de forma criativa as funções das bibliotecas de ciência de dados em R propostas por Wickham e Grolemund (2016).
-* As análises quantitativas devem lançar mão de recursos gráficos variados, que complementarão análises descritivas com _insights_ sobre de que forma os processos de produção científica e acadêmica contribuem para os resultados apresentados. 
-Por exemplo, os dados analisados possibilitam justificar o eventual crescimento ou decréscimo de índices de produção observados?
-* A modelagem computacional ou estatística avançada dos dados deve usar uma das quatro técnicas prescritas: 
-    + Aprendizado de Máquina (Datacamp, 2018; Kuhn et al., 2018; Bruce e Bruce, 2017); 
-    + Aprendizado Estatístico; 
-    + Mineração de Texto ou; 
-    + Análise de Redes (Kolaczyk e Csárdi, 2014; Lusher et al., 2013; de Nooy et al., 2005).
+C. *Preparação dos dados*
 
-O conjunto de requisitos relativos a ferramentas e técnicas a serem empregadas na execução do trabalhodo projeto deve ser declarado na parte de metodologia do relatório.
+Nessa etapa realizamos a limpeza dos dados para ser possível trabalharmos com eles nas próximas etapas, seguindo o padrão de 'tidy data'.
+
+
+D. *Modelagem*
+
+É nessa etapa que a mineração dos dados ocorre de fato, iniciamos com uma análise preditiva das possíveis relações dos dados e com uma análise mais profunda as predições iniciais podem ser validadas, além de termos novos insights a respeito dos dados durante esse processo de validação.
+
+E. *Avaliação*
+
+A avaliação é uma validação mais qualitativa que quantitativa, isto é, uma validação se os resultados obtidos na modelagem são realmente úteis. Essa etapa é essencial quando a análise dos dados está sendo feita para um cliente, pois com ela os cientistas de dados podem ter uma ideia melhor se os resultados das análises estão de acordo com o que o cliente espera.
+
+F. *Desenvolvimento*
+
+Agora com todas as validações e ultimos ajustes nos algoritmos de análise dos dados, o modelo de mineração finalmente pode começar a ser aplicado em soluções de problemas reais.
 
 ##Modelo de Referência CRISP-DM
 
@@ -230,10 +239,38 @@ Existem aspectos comuns, mas também grandes peculiaridades, descritas parcialme
 ##A UnB dentro do Sistema Nacional de Pós-Graduação (Contextualização)
 
 ### O que é a UnB?
-Descrição da Universidade de Brasília, com foco na sua produção científica e acadêmica.
+A Universidade de Brasília (UnB) foi inaugurada, em 21 de abril de 1962, após dois anos da criação de Brasília. A criação da Universidade foi fruto do sonho e do trabalho de educadores como Darcy Ribeiro e Anísio Teixeira.
+
+As regras, a estrutura e concepção da Universidade foram definidas pelo Plano Orientador, uma espécie de Carta Magna, datada de 1962, e ainda hoje em vigor. O Plano foi a primeira publicação da Editora UnB e mostra o espírito inovador da instituição. “Só uma universidade nova, inteiramente planificada, estruturada em bases mais flexíveis, poderá abrir perspectivas de pronta renovação do nosso ensino superior”, diz o Plano Orientador.
+
+Hoje a Universidade de Brasília é formada por 4 campis, a Faculdade UnB Planaltina (FUP), a primeira fora do Plano Piloto, a Faculdade de Ceilândia (FCE) e a Faculdade do Gama (FGA) e o Campus Universitário Darcy Ribeiro.
+
+A missão da Universidade é ser uma instituição inovadora, comprometida com a excelência acadêmica, científica e tecnológica formando cidadãos conscientes do seu papel transformador na sociedade, respeitadas a ética e a valorização de identidades e culturas com responsabilidade social.
 
 ###Descrição das pós-graduações da UnB
-Texto a desenvolver.
+
+O programa de pós-gradução da faculdade de comunicação (FAC) é divido em dois grupos: mestrado e doutorado. Além disso, o Programa de Pós-Graduação em Comunicação da Faculdade de Comunicação da Universidade de Brasília (PPG/FAC/UnB) completou, em 2018, 44 anos de atividades ininterruptas de formação e pesquisa de excelência na área. Com um Mestrado consolidado, em atividade desde 1974, e um Doutorado de alto padrão, instalado em 2003, o PPG/FAC/UnB, por sua localização central, tem marcado sua atuação por uma forte inserção regional, nacional e mesmo internacional e pela formação de novos quadros qualificados para o ensino, a pesquisa e a extensão principalmente para as regiões Centro-Oeste e Norte. 
+
+O Programa, a partir de suas quatro linhas de pesquisa, tem reconhecido destaque nos estudos da Comunicação e da Sociedade, com ênfase em epistemologia, teorias e tecnologias de comunicação, políticas de comunicação e de cultura (das quais é pioneiro no Brasil), jornalismo (com atualizado enfoque para as transformações estruturais) e estudos de linguagens e narrativas.
+Os docentes são líderes de grupos de pesquisa e têm se dedicado a um intenso esforço de publicação em conjunto com os discentes do Programa e parceiros de pesquisa (o que pode ser atestado pelos indicadores quantitativos e qualitativos da produção intelectual).
+
+Ao longo dos 43 anos de atividade do Mestrado e 14 anos de existência do Doutorado, o PPG/FAC/UnB formou 522 Mestres e 112 Doutores.
+
+Já o curso de Direito da Universidade de Brasília foi criado junto com a Universidade em 1962, dentro do Instituto Central de Ciências Humanas (ICCH) até a criação da Faculdade de Ciências Jurídicas e Sociais (FCJS), em 1967.
+
+O curso de mestrado em Direito foi criado apenas em 1975. O curso de pós graduação em direito na Universidade de Brasília possui um grande foco em Direito e Estado, sendo referencia nacinal nos estudos de Direito Público.
+
+Atualmente o curso de graduação é oferecido tanto no período diurno como noturno e os coordenadores dos cursos de cada período são, respectivamente, Professor Henrique Araújo Costa e a Professora Inez Lopes. O coordenador dos cursos de pós-graduação é o Professor Valcir Gassen.
+
+A Faculdade de Direito da Universidade de Brasília tembém possui um periódico anual chamado Revista Direito.UnB no qual são publicados artigos de alunos e professores.
+
+E, por fim, o Programa de Pós–graduação em Ciência da Informação (PPGCInf), da Faculdade de Ciência da Informação (FCI), da Universidade de Brasília (UnB), visa aprofundar os conhecimentos adquiridos por graduados e pós-graduados em cursos superiores, regulamentados pelos órgãos competentes no Brasil, com interesses afins ao Programa, dando-lhes oportunidade de desenvolver competência científica e capacidade profissional e criadora em Ciência da Informação, formando pesquisadores, professores e profissionais de alto nível, aptos a desenvolver pesquisas e realizar inovações nesta área do saber. O PPGCInf tem como área de concentração: Gestão da Informação. O PPGCInf compreende os cursos de Mestrado Acadêmico e Doutorado (stricto sensu) na área de Ciência da Informação.
+
+O Mestrado Acadêmico objetiva promover a competência científica de graduados, contribuindo para a formação de docentes e pesquisadores na área da informação. O Doutorado visa formar profissionais de alto nível, que possam atuar como pesquisadores autônomos e como docentes na área de Ciência da Informação, buscando: propiciar visão abrangente da área; desenvolver sólida base teórica relativa à área; estimular o desenvolvimento da produção científica da área, com projetos de pesquisa inovadores e socialmente relevantes.
+
+A Linha de Pesquisa Organização da Informação busca propor conhecimentos nos níveis epistemológico, científico e prático relativos à origem, coleta, organização, estocagem, recuperação, interpretação, transmissão, transformação e uso da informação. Neste contexto, relaciona-se com a natureza da informação, a terminologia e modelos de tratamento e recuperação de informações; as necessidades dos usuários de informação e suas implicações; a identificação dos recursos necessários a partir dos tipos e formatos; a identificação, o tratamento e a recuperação de informações adequadas para o usuário; a formulação de políticas, estratégias, planejamentos, normas e processos relacionados a diferentes espaços de informação.
+
+A Linha de Pesquisa Comunicação e Mediação da Informação reúne estudos que buscam conhecimentos nos níveis epistemológico, científico e prático sobre processos de comunicação em diversos contextos e setores da sociedade. Os estudos desenvolvidos sob esta linha privilegiam a busca pelo entendimento dos fenômenos relacionados ao fluxo da informação, os atores que deles participam e os canais utilizados. Os estudos dessa linha contemplam ainda fatores internos e externos que influenciam tais fluxos e a produção e aplicação de indicadores para sua avaliação. A linha inclui também estudos sobre políticas, estratégias e planejamento dos processos de comunicação nos diversos contextos e setores da sociedade e desdobramentos sociais, políticos, culturais e econômicos da comunicação e acesso à informação, e ainda estudos relacionados às profissões ligadas a esses processos.
 
 ###Outros aspectos que caracterizam a produção científica e acadêmica da UnB
 Texto a desenvolver.
