@@ -469,32 +469,13 @@ names(unb.pub_ci$PERIODICO)
 
 
 ###Arquivo Orientação
+
+A estrutura dos arquivos de publicações é a mesma para os 3 cursos, com a funçao abaixo é possível visualizar um exemplo dessa estrutura para o arquivo de orientações do curso de Ciência da Informação.
+
 ```{r}
-#Orientação
-#Visualizar a estrutura do json no painel Viewer
-#jsonedit(unb.adv)
-#Reunir todos os anos e orientações concluidas em um mesmo data-frame
-unb.adv.tipo.df <- data.frame(); unb.adv.df <- data.frame()
-for (i in 1:length(unb.adv[[1]]))
-  unb.adv.tipo.df <- rbind(unb.adv.tipo.df, unb.adv$ORIENTACAO_CONCLUIDA_POS_DOUTORADO[[i]])
-unb.adv.df <- rbind(unb.adv.df, unb.adv.tipo.df); unb.adv.tipo.df <- data.frame()
-for (i in 1:length(unb.adv[[1]]))
-  unb.adv.tipo.df <- rbind(unb.adv.tipo.df, unb.adv$ORIENTACAO_CONCLUIDA_DOUTORADO[[i]])
-unb.adv.df <- rbind(unb.adv.df, unb.adv.tipo.df); unb.adv.tipo.df <- data.frame()
-for (i in 1:length(unb.adv[[1]]))
-  unb.adv.tipo.df <- rbind(unb.adv.tipo.df, unb.adv$ORIENTACAO_CONCLUIDA_MESTRADO[[i]])
-unb.adv.df <- rbind(unb.adv.df, unb.adv.tipo.df)
-glimpse(unb.adv.df)
-#Transformar as colunas de listas em caracteres eliminando c("")
-unb.adv.df$nome_orientadores <- gsub("\"|c\\(|\\)", "", unb.adv.df$nome_orientadores)
-unb.adv.df$id_lattes_orientadores <- gsub("\"|c\\(|\\)", "", unb.adv.df$id_lattes_orientadores)
-#Separar as colunas com dois orientadores
-unb.adv.df <- separate(unb.adv.df, nome_orientadores, into = c("ori1", "ori2"), sep = ",")
-unb.adv.df <- separate(unb.adv.df, id_lattes_orientadores, into = c("idLattes1", "idLattes2"), sep = ",")
-#Numero de orientacoes por ano
-table(unb.adv.df$ano)
-#Tabela com nome de professor e numero de orientacoes
-head(sort(table(rbind(unb.adv.df$ori1, unb.adv.df$ori2)), decreasing = TRUE), 20)
+names(unb.adv_ci)
+names(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_MESTRADO$`2017`)
+
 ```
 
 
@@ -502,9 +483,7 @@ head(sort(table(rbind(unb.adv.df$ori1, unb.adv.df$ori2)), decreasing = TRUE), 20
 
 Como já informado, a verificação da qualidade dos dados envolve responder se os dados disponíveis estão realmente completos. 
 
-As informações disponíveis são suficientes para o trabalho proposto? 
-
-Neste projeto, a verificação da qualidade dos dados é responsabilidade dos alunos.
+Com relação à qualidade dos dados é possível concluir que os dados não têm uma estrutura boa e adequada para análises estatísticas, porém esses dados possuem informações relevantes sobre os programas de pós graduação dos 3 cursos. Além disso, esses dados possuem integridade sem duplicação, o que facilita o pré processamento desses dados. 
 
 #CRISP-DM Fase 3 -  __Preparação dos Dados__
 
@@ -512,303 +491,309 @@ Como já informado, na fase de __Preparação dos Dados__ os _datasets_ que ser�
 
 São 5 as atividades genéricas nesta fase de preparação dos dados, a seguir divididas em subseções
 
-##CRISP-DM Fase.Atividade 3.1 - Seleção dos dados. 
+##CRISP-DM Fase.Atividade 3.1 - Seleção e Limpeza dos dados. 
 
 Como já informado, a seleção dos dados envolve identificar quais dados, da nossa "montanha de dados", serão realmente utilizados. 
 
-Quais variáveis dos dados brutos serão convertidas para o _dataset_? 
 
-Não é raro cometer o erro de selecionar dados para um modelo preditivo com base em uma falsa ideia de que aqueles dados contém a resposta para o modelo que se quer construir. Surge o cuidado de se separar o sinal do ruído (Silver, Nate. The Signal and the Noise: Why so many predictions fail — but some don’t. USA: The Penguin Press HC, 2012.). 
-
-##CRISP-DM Fase.Atividade 3.2 - Limpeza dos dados
-
-##CRISP-DM Fase.Atividade 3.3 - Construção dos dados
-
-Como já informado, a construção dos dados envolve a criação de novas variáveis a partir de outras presentes nos _datasets_.
 ```{r}
-# Funcoes 
+# Limpeza dos dados de publicações
+periodicos_ci <- tibble()
+for (i in 1:length(unb.pub_ci$PERIODICO))
+  periodicos_ci <- rbind(periodicos_ci, unb.pub_ci$PERIODICO[[i]])
+livros_ci <- tibble()
+for (i in 1:length(unb.pub_ci$LIVRO))
+  livros_ci <- rbind(livros_ci, unb.pub_ci$LIVRO[[i]])
+capitulo_de_livros_ci <- tibble()
+for (i in 1:length(unb.pub_ci$CAPITULO_DE_LIVRO))
+  capitulo_de_livros_ci <- rbind(capitulo_de_livros_ci,
+                              unb.pub_ci$CAPITULO_DE_LIVRO[[i]])
+texto_em_jornais_ci <- tibble()
+for (i in 1:length(unb.pub_ci$TEXTO_EM_JORNAIS))
+  texto_em_jornais_ci <- rbind(texto_em_jornais_ci,
+                            unb.pub_ci$TEXTO_EM_JORNAIS[[i]])
+eventos_ci <- tibble()
+for (i in 1:length(unb.pub_ci$EVENTO))
+  eventos_ci <- rbind(eventos_ci, unb.pub_ci$EVENTO[[i]])
+artigos_aceitos_ci <- tibble()
+for (i in 1:length(unb.pub_ci$ARTIGO_ACEITO))
+  artigos_aceitos_ci <- rbind(artigos_aceitos_ci, unb.pub_ci$ARTIGO_ACEITO[[i]])
+demais_publicacoes_ci <- tibble()
+for (i in 1:length(unb.pub_ci$DEMAIS_TIPOS_DE_PRODUCAO_BIBLIOGRAFICA))
+  demais_publicacoes_ci <- rbind(demais_publicacoes_ci,
+                  unb.pub_ci$DEMAIS_TIPOS_DE_PRODUCAO_BIBLIOGRAFICA[[i]])
 
-# converte as colunas de um dataframe tipo lista em tipo character
-cv_tplista2tpchar <- function( df  ) { 
-  for( variavel in names(df)) {
-    if (class(df[[variavel]]) == "list" ) {
-      df[[variavel]] <- lapply(df[[variavel]] ,   function(x)   lista2texto( x  ) ) 
-      df[[variavel]] <- as.character( df[[variavel]] )
-    }
-  }
-  return(df)
-}
-###
 
 
-# converte o conteudo de lista em array de characters
-lista2texto <- function( lista  ) {
-  if(is.null(lista)) {
-    return ( NULL )
-  }
-  saida <- ""
-  for( j in 1:length(lista)) { 
-    for( i in 1:length(lista[[j]]) ) {
-      elemento <- lista[[j]][i] 
-      if( !is.null(elemento)) { 
-        if( i == length(lista[[j]]) & j == length(lista)  ) { 
-          # se for o ultimo elemento nao coloque o ponto e virgula no final            
-          saida <- paste0( saida , elemento  )
-        } else {
-          # enquanto nao for o ultimo coloque ; separando os elementos concatenados 
-          saida <- paste0( saida , elemento , sep = " ; ")
-        }
-      }  
-    }
-  }
-  return( saida )
-}
+periodicos_comunicacao <- tibble()
+for (i in 1:length(unb.pub_comunicacao$PERIODICO))
+  periodicos_comunicacao <- rbind(periodicos_comunicacao, unb.pub_comunicacao$PERIODICO[[i]])
+livros_comunicacao <- tibble()
+for (i in 1:length(unb.pub_comunicacao$LIVRO))
+  livros_comunicacao <- rbind(livros_comunicacao, unb.pub_comunicacao$LIVRO[[i]])
+capitulo_de_livros_comunicacao <- tibble()
+for (i in 1:length(unb.pub_comunicacao$CAPITULO_DE_LIVRO))
+  capitulo_de_livros_comunicacao <- rbind(capitulo_de_livros_comunicacao,
+                              unb.pub_comunicacao$CAPITULO_DE_LIVRO[[i]])
+texto_em_jornais_comunicacao <- tibble()
+for (i in 1:length(unb.pub_comunicacao$TEXTO_EM_JORNAIS))
+  texto_em_jornais_comunicacao <- rbind(texto_em_jornais_comunicacao,
+                            unb.pub_comunicacao$TEXTO_EM_JORNAIS[[i]])
+eventos_comunicacao <- tibble()
+for (i in 1:length(unb.pub_comunicacao$EVENTO))
+  eventos_comunicacao <- rbind(eventos_comunicacao, unb.pub_comunicacao$EVENTO[[i]])
+artigos_aceitos_comunicacao <- tibble()
+for (i in 1:length(unb.pub_comunicacao$ARTIGO_ACEITO))
+  artigos_aceitos_comunicacao <- rbind(artigos_aceitos_comunicacao, unb.pub_comunicacao$ARTIGO_ACEITO[[i]])
+demais_publicacoes_comunicacao <- tibble()
+for (i in 1:length(unb.pub_comunicacao$DEMAIS_TIPOS_DE_PRODUCAO_BIBLIOGRAFICA))
+  demais_publicacoes_comunicacao <- rbind(demais_publicacoes_comunicacao,
+                  unb.pub_comunicacao$DEMAIS_TIPOS_DE_PRODUCAO_BIBLIOGRAFICA[[i]])
 
-# Converte producao elattes separada por anos em um unico dataframe 
-converte_producao2dataframe<- function( lista_producao ) {
-  df_saida <- NULL 
-  
-  for( ano in names(lista_producao)) {
-    df_saida <- rbind(df_saida , lista_producao[[ano]])
-  }
-  
-  # converte tipo lista em array de character 
-  df_saida <- cv_tplista2tpchar(df_saida)
-  return(df_saida)
-  
 
-}
 
-#concatena dois dataframes com  colunas diferentes 
-concatenadf <- function( df1, df2) { 
-  #cria colunas de df1 que faltam em df2
-  for( coluna in names(df1 ) ) {
-    if( !is.element(coluna, names(df2) )) {
-      df2[coluna] <- NA
-    }
-  }
-  
-  #cria colunas de df2 que faltam em df1  
-  for( coluna in names(df2 ) ) {
-    
-    if( !is.element(coluna, names(df1) )) {
-      df1[coluna] <- NA
-    }
-  }
-  
-  
-  #faz o rbind dos dois dataframes 
-  df_final <- rbind(df1 , df2)
-  return(df_final)
-  
-}
+periodicos_direito <- tibble()
+for (i in 1:length(unb.pub_direito$PERIODICO))
+  periodicos_direito <- rbind(periodicos_direito, unb.pub_direito$PERIODICO[[i]])
+livros_direito <- tibble()
+for (i in 1:length(unb.pub_direito$LIVRO))
+  livros_direito <- rbind(livros_direito, unb.pub_direito$LIVRO[[i]])
+capitulo_de_livros_direito <- tibble()
+for (i in 1:length(unb.pub_direito$CAPITULO_DE_LIVRO))
+  capitulo_de_livros_direito <- rbind(capitulo_de_livros_direito,
+                              unb.pub_direito$CAPITULO_DE_LIVRO[[i]])
+texto_em_jornais_direito <- tibble()
+for (i in 1:length(unb.pub_direito$TEXTO_EM_JORNAIS))
+  texto_em_jornais_direito <- rbind(texto_em_jornais_direito,
+                            unb.pub_direito$TEXTO_EM_JORNAIS[[i]])
+eventos_direito <- tibble()
+for (i in 1:length(unb.pub_direito$EVENTO))
+  eventos_direito <- rbind(eventos_direito, unb.pub_direito$EVENTO[[i]])
+artigos_aceitos_direito <- tibble()
+for (i in 1:length(unb.pub_direito$ARTIGO_ACEITO))
+  artigos_aceitos_direito <- rbind(artigos_aceitos_direito, unb.pub_direito$ARTIGO_ACEITO[[i]])
+demais_publicacoes_direito <- tibble()
+for (i in 1:length(unb.pub_direito$DEMAIS_TIPOS_DE_PRODUCAO_BIBLIOGRAFICA))
+  demais_publicacoes_direito <- rbind(demais_publicacoes_direito,
+                  unb.pub_direito$DEMAIS_TIPOS_DE_PRODUCAO_BIBLIOGRAFICA[[i]])
 
-# Extracao dos perfis dos professores 
-
-extrai_1perfil <- function( professor ) {
-  idLattes <- names(professor)
-  nome <- professor[[idLattes]]$nome   
-  resumo_cv <- professor[[idLattes]]$resumo_cv 
-  endereco_profissional <- professor[[idLattes]]$endereco_profissional #list 
-  instituicao <- endereco_profissional$instituicao
-  orgao <- endereco_profissional$orgao
-  unidade <- endereco_profissional$unidade
-  DDD <- endereco_profissional$DDD
-  telefone <- endereco_profissional$telefone
-  bairro <- endereco_profissional$bairro
-  cep <- endereco_profissional$cep
-  cidade <- endereco_profissional$cidade
-  senioridade <- professor[[idLattes]]$senioridade  
-  df_1perfil <- data.frame( idLattes , nome, resumo_cv ,instituicao , 
-                           orgao, unidade , DDD, telefone, bairro,cep,cidade , senioridade,
-                           stringsAsFactors = FALSE)
-  
-  return(df_1perfil)  
-}
-
-extrai_perfis <- function(jsonProfessores) {
-  df_saida <- data.frame()
-  for( i in 1:length(jsonProfessores)) {
-    jsonProfessor <- jsonProfessores[i]
-    df_professor <- extrai_1perfil(jsonProfessor)
-    if( nrow(df_saida) > 0 ) {
-      df_saida <- rbind(df_saida , df_professor)
-    } else {
-      df_saida <- df_professor 
-    }
-  }
-   
-  return(df_saida)
-}
-
-# Extracao da producao bibliografica dos professores 
-
-extrai_1producao <- function(professor) {
-  idLattes <- names(professor)
-  df_1producao <<- NULL 
-  producao_bibliografica <- professor[[idLattes]]$producao_bibiografica  #list
-  for( tipo_producao in names(producao_bibliografica)) { 
-    df_temporario <- cv_tplista2tpchar ( producao_bibliografica[[tipo_producao]]) 
-    df_temporario$tipo_producao <-  tipo_producao 
-    df_temporario$idLattes <-  idLattes
-    df_1producao <- concatenadf( df_1producao , df_temporario  )
-  }  
-  return(df_1producao)
-}
-
-extrai_producoes <- function( jsonProfessores) {
-  df_saida <- data.frame()
-  for( i in 1:length(jsonProfessores)) {
-    jsonProfessor <- jsonProfessores[i]
-    df_producao <- extrai_1producao(jsonProfessor)
-    if( nrow(df_saida) > 0 ) {
-      df_saida <- concatenadf(df_saida , df_producao)
-    } else {
-      df_saida <- df_producao 
-    }
-  }
-  df_saida <- df_saida %>% filter( !is.na(tipo_producao))
-  return(df_saida)  
-}
-
-# Extracao das orientacoes dos professores 
-
-extrai_1orientacao <- function(professor) {
-  idLattes <- names(professor)
-  df_1orientacao <- NULL
-  orientacoes_academicas  <- professor[[idLattes]]$orientacoes_academicas  #list
-  for( orientacao in names(orientacoes_academicas )) { 
-    df_temporario <- cv_tplista2tpchar ( orientacoes_academicas[[orientacao]])
-    df_temporario$orientacao <-  orientacao 
-    df_temporario$idLattes <-  idLattes
-    df_1orientacao <- concatenadf( df_1orientacao , df_temporario  )
-  }  
-  return(df_1orientacao) 
-}
-
-extrai_orientacoes <- function(jsonProfessores) {
-  df_saida <- data.frame()
-  for( i in 1:length(jsonProfessores)) {
-    jsonProfessor <- jsonProfessores[i]
-    df_orientacao <- extrai_1orientacao(jsonProfessor)
-    if( nrow(df_saida) > 0 ) {
-      df_saida <- concatenadf(df_saida , df_orientacao)
-    } else {
-      df_saida <- df_orientacao
-    }
-  }
-  df_saida <- df_saida %>% filter(!is.na(idLattes))
-  return(df_saida)  
-}
-
-# Extracao das areas de atuacao dos professores 
-
-extrai_1area_de_atuacao <- function(professor){
-  idLattes <- names(professor)
-  df_1area <-  professor[[idLattes]]$areas_de_atuacao
-  df_1area$idLattes <- idLattes
-  return(df_1area)
-}
-
-extrai_areas_atuacao <- function(jsonProfessores){
-  df_saida <- data.frame()
-  for( i in 1:length(jsonProfessores)) {
-    jsonProfessor <- jsonProfessores[i]
-    df_area_atuacao <- extrai_1area_de_atuacao(jsonProfessor)
-    if( nrow(df_saida) > 0 ) {
-      df_saida <- concatenadf(df_saida , df_area_atuacao)
-    } else {
-      df_saida <- df_area_atuacao
-    }
-  }
-  df_saida <- df_saida %>% filter( !is.na(idLattes))
-  return(df_saida)   
-}
-########################### Inicio 
-
-# colocar o diretorio onde está o arquivo json de perfis a serem lidos 
-unb.prof.json <- read_file("data/unbpos.profile.json")
-unb.prof.df.capes <- read.csv("data/PesqPosCapes.csv", 
-                              sep = ";", header = TRUE, colClasses = "character")
-unb.prof <- fromJSON(unb.prof.json)
-length(unb.prof)
-
-# extrai perfis dos professores 
-unb.prof.df.professores <- extrai_perfis(unb.prof)
-
-# extrai producao bibliografica de todos os professores 
-unb.prof.df.publicacoes <- extrai_producoes(unb.prof)
-
-#extrai orientacoes 
-unb.prof.df.orientacoes <- extrai_orientacoes(unb.prof)
-
-#extrai areas de atuacao 
-unb.prof.df.areas.de.atuacao <- extrai_areas_atuacao(unb.prof)
-
-#salva os daframes 
-save(unb.prof.df.professores, unb.prof.df.publicacoes,
-     unb.prof.df.orientacoes, unb.prof.df.areas.de.atuacao, file = "dataframes.Rda")
-
-#cria arquivo para análise
-unb.prof.df <- data.frame()
-unb.prof.df <- unb.prof.df.professores %>% 
-  select(idLattes, nome, resumo_cv, senioridade) %>% 
-  left_join(
-    unb.prof.df.orientacoes %>% 
-      select(orientacao, idLattes) %>% 
-      filter(!grepl("EM_ANDAMENTO", orientacao)) %>% 
-      group_by(idLattes) %>% 
-      count(orientacao) %>% 
-      spread(key = orientacao, value = n), 
-    by = "idLattes") %>% 
-  left_join(
-    unb.prof.df.publicacoes %>% 
-      select(tipo_producao, idLattes) %>% 
-      filter(!grepl("ARTIGO_ACEITO", tipo_producao)) %>% 
-      group_by(idLattes) %>% 
-      count(tipo_producao) %>% 
-      spread(key = tipo_producao, value = n), 
-    by = "idLattes") %>% 
-  left_join(
-    unb.prof.df.areas.de.atuacao %>% 
-      select(area, idLattes) %>% 
-      group_by(idLattes) %>% 
-      summarise(n_distinct(area)), 
-    by = "idLattes") %>% 
-  left_join(
-    unb.prof.df.capes %>% 
-      select(AreaPos, idLattes) %>% 
-      group_by(idLattes) %>% 
-      summarise(n_distinct(AreaPos)), 
-    by = "idLattes")
-
-glimpse(unb.prof.df)
 ```
 
 
-##CRISP-DM Fase.Atividade 3.4 - Integração dos dados
+```{r echo=TRUE}
+nao_concluido_ci <- data.frame()
+for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DE_POS_DOUTORADO))
+nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DE_POS_DOUTORADO[[i]])
 
-Como já informado, a integração dos dados envolve a união (merge) de diferentes tabelas para criar um único _dataset_ para ser utilizado no R, por exemplo.
+for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DOUTORADO))
+nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DOUTORADO[[i]])
 
-##CRISP-DM Fase.Atividade 3.5 -  Formatação dos dados
+for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_MESTRADO))
+nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_MESTRADO[[i]])
 
-Como já informado, a formatação de dados envolve a realização de pequenas alterações na estrutura dos dados, como a ordem das variáveis, para permitir a execução de determinado método de data mining.
+for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_GRADUACAO))
+nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_GRADUACAO[[i]])
 
-#CRISP-DM Fase 4 - __Modelagem__
+concluido_ci <- data.frame()
 
-Como já informado, na fase de __Modelagem__ no CRISP-DM ocorre a construção e avaliação de modelos estatísticos ou computacionais, podendo ser realizada em quatro atividades genéricas, a seguir organizadas na forma de seções
+for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_INICIACAO_CIENTIFICA))
+concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_INICIACAO_CIENTIFICA[[i]])
 
-##CRISP-DM Fase.Atividade 4.1 - Seleção das técnicas de modelagem
+for (i in 1:length(unb.adv_ci$ORIENTACAO_CONCLUIDA_POS_DOUTORADO))
+concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_CONCLUIDA_POS_DOUTORADO[[i]])
 
-##CRISP-DM Fase.Atividade 4.2 -  Realização de testes de modelagem
+for (i in 1:length(unb.adv_ci$ORIENTACAO_CONCLUIDA_DOUTORADO))
+concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_CONCLUIDA_DOUTORADO[[i]])
 
-Como já informado, na realização de testes de modelagem diferentes modelos estatísticos ou computacionais são previamente testados e avaliados. Pode-se dividir o _dataset_ criado na etapa anterior para se ter uma base de treino na construção de modelos, e outra pequena parte para validar  e avaliar a eficiência de cada modelo criado até se chegar ao mais “eficiente”. 
+for (i in 1:length(unb.adv_ci$ORIENTACAO_CONCLUIDA_MESTRADO))
+concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_CONCLUIDA_MESTRADO[[i]])
 
-##CRISP-DM Fase.Atividade 4.3 -  Construção do modelo definitivo
+```
 
-Como já informado, a construçao do modelo definitivo é realizada com base na melhor experiência do passo anterior.
+Não é raro cometer o erro de selecionar dados para um modelo preditivo com base em uma falsa ideia de que aqueles dados contém a resposta para o modelo que se quer construir. Surge o cuidado de se separar o sinal do ruído (Silver, Nate. The Signal and the Noise: Why so many predictions fail — but some don’t. USA: The Penguin Press HC, 2012.). 
 
-##CRISP-DM Fase.Atividade 4.4 - Avaliação do modelo
+
+#CRISP-DM Fase 4 - __Resultados__
+
+Nessa seção são apresentados os resultados obtidos nessa etapa do projeto assim como uma explicação mais profunda e demostrativa dos dados utilizados.
+
+A primeira observação que podemos fazer é que os professores de direto tiveram apenas 4 artigos aceitos como mostrado a seguir.
+
+```{r}
+subset(artigos_aceitos_direito, select=c("ano", "titulo", "periodico")) %>%
+  kable() %>%
+  kable_styling() %>%
+  column_spec(2:3, width = "17em")
+```
+
+Isso se deve a produção científica do Direito ser mais focada em publicações e principalmente e na produção de capítulos de livros, se diferenciando da produção em outros cursos das áreas de Engenharia e Infomatica que publicam muitos artigos.
+
+Agora focando mais nos capítulos de livros produzidos, a primeira análise inicial que temos é na quantidade de capítulos de livros produzidos por ano entre 2010 e 1017.
+
+```{r echo=TRUE}
+capitulo_de_livros_direito %>%
+  group_by(ano) %>%
+  summarise(n = n()) %>%
+  ggplot(aes(x = ano, y = n)) +
+  geom_bar(position = "stack", stat = "identity", fill = "steelblue")+
+  geom_text(aes(label=n), vjust=-0.3) +
+  ylab("Número de capítulos de livros produzidos")
+```
+
+
+
+O curso de direito também produz muitas publicações em periódicos, então realizando a mesma análise por ano como feita com os capítulos de livros, para podermos comparar os dois tipos de produção, temos o seguinte resultado.
+```{r echo=TRUE}
+periodicos_direito %>%
+  group_by(ano) %>%
+  summarise(n = n()) %>%
+  ggplot(aes(x = ano, y = n)) +
+  geom_bar(position = "stack", stat = "identity", fill = "steelblue")+
+  geom_text(aes(label=n), vjust=-0.3) +
+  ylab("Número de periódiocos produzidos")
+```
+
+Por esse gráficos podemos observar que a produção anual de periódicos e capítulos de livros são bem próximas, com exceção apenas do ano de 2010 e 2011, quando a produção de periódicos e capítulos de livros foram bem menores que nos outros anos.
+
+Voltando nossa análise para os capítulos de livros produzidos, podemos observar o nível de internacionalização dessas produções, isto é, quantos livros foram publicados em cada pais.
+
+```{r echo=TRUE}
+subset(capitulo_de_livros_direito, select=c("pais_de_publicacao", "ano")) %>%
+  group_by(pais_de_publicacao) %>%
+  summarise(n = n()) %>%
+  data.frame %>%
+  arrange(desc(n)) %>%
+  kable(col.names=c("País de publicação", "Número de capítulos de livro")) %>%
+  kable_styling()
+```
+
+Podemos observar que temos poucas publicações internacionais do curso de Direito. Após pesquisar sobre o assunto e conversar com alguns alunos do curso de Direito para tentar entender porque isso ocorre, o principal motivo encontrado é que produções como capítulos de livro e publicações normalmente estão muito atrelados ao sistema Jurídico de um país espcífico.
+
+Continuando a análise do nível de internacionalização, mas agora análisando as produções que foram para enventos temos o seguinte resultado.
+
+```{r echo=TRUE}
+ggplot(data = eventos_direito) +
+  geom_bar(mapping = aes(x = ano_do_trabalho, fill = classificacao)) +
+  xlab("Ano") +
+  ylab("Número de eventos")
+```
+
+Nessa análise podemos observar que diferentemente das publicações internacionais de capítulos de livros, uma quantidade consideravel das participações em eventos de professores do Direito são em eventos internacionais. 
+
+
+
+```{r echo=TRUE}
+conc_doutorado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_DOUTORADO))))
+conc_mestrado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_MESTRADO))))
+conc_pos_doc <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_POS_DOUTORADO))))
+conc_outras <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$OUTRAS_ORIENTACOES_CONCLUIDAS))))
+orientandos_concluidos <- conc_doutorado + conc_mestrado + conc_pos_doc + conc_outras
+
+atual_cientifica <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_INICIACAO_CIENTIFICA))))
+atual_doutorado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_DOUTORADO))))
+atual_graduacao <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_GRADUACAO))))
+atual_mestrado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_MESTRADO))))
+orientandos_atuais <- atual_cientifica + atual_doutorado + atual_graduacao + atual_mestrado
+
+data <- data.frame(quantidade=c(orientandos_concluidos, orientandos_atuais), orientando=c("Orientandos Finalizados", "Orientandos Atuais"))
+
+ggplot(data, aes(x = orientando,y=quantidade,fill = orientando)) +   xlab("Atual/Finalizado") +ylab("Quantidade")+
+  labs(title = "Quantidade de orientandos que já finalizaram e atuais") +  geom_bar(stat="identity")+theme_minimal()
+
+orientandos_atuais + orientandos_concluidos + length(unb.prof_comunicacao)
+
+```
+
+
+Para medir o nível de internacionalização, foi necessário analisar a produção bibliográfica
+de cada professor, mais especificamente a classificação do evento que eles tiveram essa
+produção bibliográfica, que pode variar entre local, regional, nacional e internacional.
+
+```{r echo=TRUE}
+
+internacional <- sapply(unb.prof_comunicacao, function(x) x$producao_bibiografica$EVENTO$classificacao == "INTERNACIONAL")
+num_internacional <- 0
+for (i in 1:length(internacional))
+  num_internacional <- num_internacional + sum(internacional[[i]], na.rm=TRUE)
+
+nacional <- sapply(unb.prof_comunicacao, function(x) x$producao_bibiografica$EVENTO$classificacao == "NACIONAL")
+num_nacional <- 0
+for (i in 1:length(nacional))
+  num_nacional <- num_nacional + sum(nacional[[i]], na.rm=TRUE)
+
+regional <- sapply(unb.prof_comunicacao, function(x) x$producao_bibiografica$EVENTO$classificacao == "REGIONAL")
+num_regional <- 0
+for (i in 1:length(regional))
+  num_regional <- num_regional + sum(regional[[i]], na.rm=TRUE)
+
+local <- sapply(unb.prof_comunicacao, function(x) x$producao_bibiografica$EVENTO$classificacao == "LOCAL")
+num_local <- 0
+for (i in 1:length(local))
+  num_local <- num_local + sum(local[[i]], na.rm=TRUE)
+
+df <- data.frame(classificacao=c("INTERNACIONAL", "NACIONAL", "REGIONAL", "LOCAL"), quantidade=c(num_internacional, num_nacional, num_regional, num_local))
+bp<- ggplot(df, aes(x="", y=quantidade, fill=classificacao))+geom_bar(width = 1, stat = "identity")
+pie <- bp + coord_polar("y", start=0)
+pie
+
+
+```
+
+
+
+
+Como pode-se observar na imagem abaixo, ao pegar os dados das orientações concluídas, a maior quantidade de orientações concluídas veio dos trabalho de conclusão de curso de graduação e em segundo lugar as orientações de outras naturezas
+
+
+```{r echo=TRUE}
+ggplot(concluido_ci, aes(x = natureza, fill = natureza)) + geom_bar() +xlab("Natureza") + ylab("Quantidade")
+
+```
+
+
+Utilizando-se uma função semelhante à utilizada acima, obteve-se o gráfico abaixo que mostra que as teses de doutorado estão em maior número, sendo seguidas pelas dissertações de mestrado, mostrando que quanto maior o aprofundamento da natureza de uma especialização, maior a chance de não se concluir a dissertação, como pode ser visto abaixo.
+
+```{r echo=TRUE}
+ggplot(nao_concluido_ci, aes(x = natureza, fill = natureza)) + geom_bar() +xlab("Natureza") + ylab("Quantidade")
+
+```
+
+Após verificar a quantidade total de orientações, baseando-se na natureza dessas orientações, foi analisado essas quantidades em cada ano compreendido entre o período de 2010 a 2017. Ao fazer o confronto, na área de orientações concluídas, entre o ano x quantidade x natureza. Obteve-se um gráfico mostrando que a conclusão das dissertações de mestrado foi bastante expressiva ao longo dos anos. Quanto às orientações não concluídas, percebe-se que na maioria dos anos, poucos trabalhos de conclusão do curso de graduação não foram finalizados. Isso tudo pode-se ser observado utilizando-se a função ggplot() da seguinte maneira:
+
+
+```{r echo=TRUE}
+ggplot(concluido_ci, aes(x = ano, fill = natureza)) + geom_bar() + ylab("Quantidade")
+
+```
+
+A mesma função foi utilizada para as Orientações não concluídas, produzindo os dois gráficos abaixo, que confirmam a análise feita acima:
+
+
+```{r echo=TRUE}
+ggplot(nao_concluido_ci, aes(x = ano, fill = natureza)) + geom_bar() + ylab("Quantidade")
+
+```
+
+
+Além desse dados obtidos, foi verificado quais e quantos cursos concluíram as suas orientações. Isso foi feito, utilizando -se a função ggplot() da seguinte maneira: 
+
+```{r echo=TRUE}
+ggplot(concluido_ci, aes(x = ano, fill = curso)) + geom_dotplot()
+
+```
+
+
+Com este gráfico, pôde-se observar que na maioria dos anos, os cursos com o maior número de orientações, na área de Ciência da informação, concluídas foram os de Comunicação e Biblioteconomia. Já para as orientações não concluídas foi feita a seguinte operação:
+
+
+```{r echo=TRUE}
+ggplot(nao_concluido_ci, aes(x = ano, fill = curso)) + geom_dotplot()
+
+```
+
+
+
+
 
 #CRISP-DM Fase 5 - __Avaliação__
 
