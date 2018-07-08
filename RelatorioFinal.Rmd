@@ -738,7 +738,7 @@ ggplot(nao_concluido_ci, aes(x = ano, fill = curso)) +
 
 #CRISP-DM Fase 5 - __Avaliação__
 
-Portanto, a análise desses dados permitiu ter uma base de entendimento interessante sobre os currículos de professores da UnB dos cursos de Ciência da Informação, Direito e Comunicação. Além de descobrir informações sobre orientações em vários âmbitos acadêmicos, de publicações em periódicos, livros, artigos, textos em jornais, de linhas de pesquisa e como esses dados são armazenados e como podem ser relacionados entre si. Além disso, cabe ressaltar que foi muito importante a utilização da metodologia Cross-Industry for Data Mining (CRISP-DM), pois dessa maneira foi possível verficar os dados contidos nos arquivos de maneira mais clara e eficiênte, fazendo com que os
+Portanto, a análise desses dados permitiu ter uma base de entendimento interessante sobre os currículos de professores da UnB dos cursos de Ciência da Informação, Direito e Comunicação. Além de descobrir informações sobre orientações em vários âmbitos acadêmicos, de publicações em periódicos, livros, artigos, textos em jornais, de linhas de pesquisa e como esses dados são armazenados e como podem ser relacionados entre si. Ademais, cabe ressaltar que foi muito importante a utilização da metodologia Cross-Industry for Data Mining (CRISP-DM), pois dessa maneira foi possível verficar os dados contidos nos arquivos de maneira mais clara e eficiênte, fazendo com que os
  dados analizados pudessem ter uma maior qualidade e confiabilidade para que o edtudo pudesse ser realizado de maneira correta.
 
 
