@@ -726,7 +726,7 @@ ggplot(nao_concluido_ci, aes(x = ano, fill = natureza)) +
 Além desse dados obtidos, foi verificado quais e quantos cursos não concluíram as suas orientações. Isso foi feito, utilizando a função ggplot() da seguinte maneira: 
 
 
-```{r echo=TRUE}
+```{r echo=TRUE, message=FALSE, warning=FALSE}
 ggplot(nao_concluido_ci, aes(x = ano, fill = curso)) +
   geom_dotplot() +
   labs(title = "Orientações não concluidas por programa da Ciência da Informação")
