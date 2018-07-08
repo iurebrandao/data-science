@@ -73,100 +73,9 @@ F. *Desenvolvimento*
 
 Agora com todas as validações e ultimos ajustes nos algoritmos de análise dos dados, o modelo de mineração finalmente pode começar a ser aplicado em soluções de problemas reais.
 
-##Modelo de Referência CRISP-DM
 
-Miner (2012), aprofunda: “(…) In CRISP-DM, the complete life cycle of a data mining project is represented with __six phases__: business understanding (determining the purpose of the study), data understanding (data exploration and understanding), data preparation, modeling, evaluation, and deployment.(…). [Miner, Gary. Practical Text Mining and Statistical Analysis for Non-structure Text Data Applications. Academic Press, 2012.]
 
-###Por que usar o CRISP-DM?
 
-Imagine uma analogia entre um projeto de datamining e a preparação de uma receita de bolo para ser usada em uma fábrica. Para iniciar a produção, com base numa receita de comprovada eficácia (metodológica e científica), você tem que minerar os ingredientes (dados) em um grande supermercado (_dataset_). Com os ingredientes você precisa aplicar um método (a forma de misturá-los), colocar os ingredientes numa determinada ordem, mexer por um certo tempo, aquecer por tantos minutos até o bolo ficar pronto e ser aprovado em um ou mais testes de degustação. 
-
-Tendo por objetivo fazer com que essa receita (script de mineração de dados) possa ser executada com sucesso diversas vezes, numa fábrica, será que outro cozinheiro (cientista) que reproduzisse a receita (método) chegaria ao mesmo resultado? Se a metodologia (receita) já foi bastante  testada, então é bem provável que o resultado será o mesmo e seu produto (receita de bolo) será aceito para a produção (_deployment_) de análises para consumo futuro, com base em fundamentos científicos.
-
-### Organização hierárquica de atividades em fases
-
-Dentro de cada fase no CRISP-DM existe uma estrutura hierárquica de atividades genéricas para serem realizadas. Cada uma dessas atividades __genéricas__ pode determinar a execução de atividades __específicas__. 
-
-Voltando ao exemplo do bolo, a atividade ” 1. Entendimento do Bolo” poderia conter uma atividade genérica chamada “1.1. Determinar para que o bolo servirá (simples café da manhã? bolo de aniversário? bolo de casamento?)“. Dentro dessa atividade genérica poderia haver atividades específicas como “1.1.1.Entrevistar o contratante para obter detalhes de onde o bolo será usado?“; “1.1.2. Conversar com os convidados sob alguma necessidade especial (sem lactose? sem glútem?)“, etc. 
-
-### Seis Fases do CRISP-DM
-
-Com base no apresentado, segue uma descrição um pouco mais detalhada das seis fases de um projeto no CRISP-DM, interpretadas no contexto do relatório que você e seu grupo deverão  produzir.
-
-Todas as fases deverão ser adequadamente relatadas no relatório, em seções que aparecem após a seçãoda metodologia 
-
-1. O propósito da fase de __Entendimento do Negócio__ é o desenvolvimento dos objetivos e declaração das necessidades do projeto sob a perspectiva do negócio, para transformar isso tudo em definição de um problema de data mining. 
-
-As atividades genéricas dentro dessa fase envolvem:
-
-* Identificar o que a organização realmente necessita alcançar. No caso específico desta disciplina, a necessidade do Sistema Nacional de Pós-Graduação do Brasil de produzir análises de alta qualidade de suas pós-graduações, com baixo custo. Como produzir um projeto de mineração de dados se você não sabe o que necessita encontrar ou resolver? Se você não entender os objetivos da organização pode levar ao erro de procurar as respostas certas para as perguntas erradas. 
-
-* Avaliação das Circunstâncias. Envolve identificar quais recursos ou dificuldades podem influenciar os  objetivos da mineração ou do projeto em si. No caso específico desta disciplina, isso envolve refletir, entre vários outros aspectos, sobre as limitações de tempo do projeto, que precisa ser realizado dentro de um semestre letivo, de modo que considerável parte das atividades já foram pré-organizadas pelos docentes responsáveis pela disciplina. 
-
-* O projeto de mineração é o grande objetivo desta etapa e o relatório precisa conter uma seção sobre Metodologia, apresentando em detalhes o que se pretende fazer adiante.
-
-2. A fase de __Entendimento dos Dados__ inicia determinando quais são os dados realmente disponíveis na organização, se existe permissão para utilizá-los, se existem dados confidenciais ou cobertos pelo sigilo. Por exemplo, um _dataset_ das declarações de imposto de renda da Receita Federal certamente seria protegido pelo sigilo fiscal. Dados de pacientes de hospitais podem conter restrições.
-
-Também é necessário acessar os dados para compreendê-los melhor para ter o _insight_ de como será feita a modelagem mais tarde.
-
-Na fase de entendimento dos dados pode-se trabalhar com quatro atividades genéricas:
-
-* Coleta inicial dos dados. Essa atividade envolve a análise das permissões de acesso e outras questões envolvendo sigilo e outros proprietários dos dados (terceiros). Por exemplo, eu poderia estar acessando uma base de dados que foi obtida de outro órgão por convênio, mas nesse convênio (contrato) não foi dada permissão para qualquer outro tipo de acesso ou exploração dos dados. Neste projeto, a coleta inicial foi feita pelos autores deste relatório. O relatório final deve conter indicações de como foi realizada a coleta inicial dos dados.
-
-* Descrição dos dados. A descrição dos dados verifica se os dados sendo acessados terão potencial para responder às questões de _data mining_. Além disso, deve-se avaliar qual o volume de dados, a estrutura dos dados (tipos), codificações usadas, etc. Neste projeto, a descrição dos dados é responsabilidade parcial dos alunos, tendo em vista que este modelo já oferece uma descrição inicial. O relatório final deve conter descrições significativas e aprofundadas dos dados.
-
-* Análise exploratória dos dados. A análise exploratória dos dados possibilita um entendimento mais profundo da relação estatística existente entre os dados dos _datasets_ para um melhor entendimento da qualidade daqueles dados para o objetivo do projeto. 
-Neste projeto, a análise exploratória dos dados é responsabilidade parcial dos alunos, tendo em vista que este relatório apresenta uma análise exploratória preliminar.
-O relatório final deve conter análises exploratórias dos dados que sejam significativas e aprofundadas.
-
-* Verificação da qualidade dos dados. A verificação da qualidade dos dados envolve responder se os dados disponíveis estão realmente completos. As informações disponíveis são suficientes para o trabalho proposto? Neste projeto, a verificação da qualidade dos dados é responsabilidade dos alunos.
-
-3. Na fase de __Preparação dos Dados__ os _datasets_ que serão utilizados em todo o trabalho são construídos a partir dos dados brutos. Aqui os dados são “filtrados” retirando-se partes que não interessam e selecionando-se os “campos” necessários para o trabalho de mineração. 
-
-São 5 as atividades genéricas nesta fase de preparação dos dados:
-
-* Seleção dos dados. Envolve identificar quais dados, da nossa "montanha de dados", serão realmente utilizados. Quais variáveis dos dados brutos serão convertidas para o _dataset_? Não é raro cometer o erro de selecionar dados para um modelo preditivo com base em uma falsa ideia de que aqueles dados contém a resposta para o modelo que se quer construir. Surge o cuidado de se separar o sinal do ruído (Silver, Nate. The Signal and the Noise: Why so many predictions fail — but some don’t. USA: The Penguin Press HC, 2012.). 
-
-* Limpeza dos dados.
-
-* Construção dos dados. Envolve a criação de novas variáveis a partir de outras presentes nos _datasets_.
-
-* Integração dos dados. Envolve a união (merge) de diferentes tabelas para criar um único _dataset_ para ser utilizado no R, por exemplo.
-
-* Formatação dos dados. Envolve a realização de pequenas alterações na estrutura dos dados, como a ordem das variáveis, para permitir a execução de determinado método de data mining.
-
-4. A fase de __Modelagem__ no CRISP-DM envolve a construção e avaliação do modelo, podendo ser realizada em quatro atividades genéricas:
-
-* Seleção das técnicas de modelagem.
-
-* Realização de testes de modelagem, onde diferentes modelos são previamente testados e avaliados. Pode-se dividir o _dataset_ criado na etapa anterior para se ter uma base de treino na construção de modelos, e outra pequena parte para validar  e avaliar a eficiência de cada modelo criado até se chegar ao mais “eficiente”. 
-
-* Construção do modelo definitivo, com base na melhor experiência do passo anterior.
-
-* Avaliação do modelo.
-
-5. Na fase de __Avaliação__ do CRISP-DM os resultados não são apenas avaliados, mas se verifica se existem questões relacionadas à organização que não foram suficientemente abordadas. Deve-se refletir se o uso arepetido do modelo criado pode trazer algum “efeito colateral” para a organização. 
-
-Nesta fase, pode-se trabalhar com 3 atividades genéricas:
-
-* Avaliação dos resultados
-
-* Revisão do processo, por meio da qual verifica-se se o modelo foi construído adequadamente. As variáveis (passadas) para construir o modelo estarão disponíveis no futuro?
-
-* Determinação dos etapas seguintes. Pode ser necessário decidir-se por finalizar o projeto, passar à etapa de desenvolvimento, ou rever algumas fases anteriores para a melhoria do projeto.
-
-6. Na fase de __Implantação__ (_deployment_) se realiza o planejamento de implantação dos produtos desenvolvidos (scripts, no caso do executado nesta disciplina) para o ambiente operacional, para seu uso repetitivo, envolvendo atividades de monitoramento e manutenção do sistema (script) desenvolvido. A fase de implantação concluir com a produção e apresentação do relatório final com os resultados do projeto.
-
-São atividades genéricas  na fase de __implantação__:
-
-* Planejamento da transição dos produtos;
-* Planejamento do monitoramento dos produtos em utilização no ambiente operacional;
-* Planejamento de manuteção a ser eventualmente efetuada no produto (scripts);
-* Produção do relatório final;
-* Apresentação do relatório final;
-* Revisão sobre a execução do projeto, com registro de lições aprendidas etc.
-
-No contexto do projeto realizado no âmbito desta disciplina, a responsabilidade por execução de todas essas atividades é dos alunos, com exceção da apresentação do relatório final, que não será realizada.
 
 # CRISP-DM Fase 1 - Entendimento do Negócio
 
@@ -226,8 +135,7 @@ A Linha de Pesquisa Organização da Informação busca propor conhecimentos nos
 
 A Linha de Pesquisa Comunicação e Mediação da Informação reúne estudos que buscam conhecimentos nos níveis epistemológico, científico e prático sobre processos de comunicação em diversos contextos e setores da sociedade. Os estudos desenvolvidos sob esta linha privilegiam a busca pelo entendimento dos fenômenos relacionados ao fluxo da informação, os atores que deles participam e os canais utilizados. Os estudos dessa linha contemplam ainda fatores internos e externos que influenciam tais fluxos e a produção e aplicação de indicadores para sua avaliação. A linha inclui também estudos sobre políticas, estratégias e planejamento dos processos de comunicação nos diversos contextos e setores da sociedade e desdobramentos sociais, políticos, culturais e econômicos da comunicação e acesso à informação, e ainda estudos relacionados às profissões ligadas a esses processos.
 
-###Outros aspectos que caracterizam a produção científica e acadêmica da UnB
-Texto a desenvolver.
+
 
 ## O que a Organização precisa realmente alcançar?
 
@@ -246,11 +154,6 @@ Como já informado, características peculiares de cada programa podem ser obtid
 
 Este documento serve como base para a realização dos trabalhos dos alunos. apresenta limitações no tocante à quantidade pequena de dados que serão empregados para análises e avaliações, tendo em vista sua finalidade maior que é a didática, de permitir aos alunos demonstrarem a capacidade de aplicação das técnicas e ferramentas apreendidas durante o semestre.
 
-###Avaliação preliminar das pós-graduações na UnB
-Texto a desenvolver.
-
-###Avaliação preliminar da produção científica e acadêmica da UnB
-Texto a desenvolver.
 
 #CRISP-DM Fase 2 - Entendimento dos Dados
 
@@ -581,36 +484,36 @@ for (i in 1:length(unb.pub_direito$DEMAIS_TIPOS_DE_PRODUCAO_BIBLIOGRAFICA))
 
 
 ```{r echo=TRUE}
+# Limpeza dos dados de orientações
 nao_concluido_ci <- data.frame()
 for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DE_POS_DOUTORADO))
-nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DE_POS_DOUTORADO[[i]])
+  nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DE_POS_DOUTORADO[[i]])
 
 for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DOUTORADO))
-nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DOUTORADO[[i]])
+  nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_DOUTORADO[[i]])
 
 for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_MESTRADO))
-nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_MESTRADO[[i]])
+  nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_MESTRADO[[i]])
 
 for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_GRADUACAO))
-nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_GRADUACAO[[i]])
+  nao_concluido_ci <- rbind(nao_concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_GRADUACAO[[i]])
 
 concluido_ci <- data.frame()
 
 for (i in 1:length(unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_INICIACAO_CIENTIFICA))
-concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_INICIACAO_CIENTIFICA[[i]])
+  concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_EM_ANDAMENTO_INICIACAO_CIENTIFICA[[i]])
 
 for (i in 1:length(unb.adv_ci$ORIENTACAO_CONCLUIDA_POS_DOUTORADO))
-concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_CONCLUIDA_POS_DOUTORADO[[i]])
+  concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_CONCLUIDA_POS_DOUTORADO[[i]])
 
 for (i in 1:length(unb.adv_ci$ORIENTACAO_CONCLUIDA_DOUTORADO))
-concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_CONCLUIDA_DOUTORADO[[i]])
+  concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_CONCLUIDA_DOUTORADO[[i]])
 
 for (i in 1:length(unb.adv_ci$ORIENTACAO_CONCLUIDA_MESTRADO))
-concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_CONCLUIDA_MESTRADO[[i]])
+  concluido_ci <- rbind(concluido_ci, unb.adv_ci$ORIENTACAO_CONCLUIDA_MESTRADO[[i]])
 
 ```
 
-Não é raro cometer o erro de selecionar dados para um modelo preditivo com base em uma falsa ideia de que aqueles dados contém a resposta para o modelo que se quer construir. Surge o cuidado de se separar o sinal do ruído (Silver, Nate. The Signal and the Noise: Why so many predictions fail — but some don’t. USA: The Penguin Press HC, 2012.). 
 
 
 #CRISP-DM Fase 4 - __Resultados__
@@ -637,7 +540,7 @@ capitulo_de_livros_direito %>%
   ggplot(aes(x = ano, y = n)) +
   geom_bar(position = "stack", stat = "identity", fill = "steelblue")+
   geom_text(aes(label=n), vjust=-0.3) +
-  ylab("Número de capítulos de livros produzidos")
+  ylab("Número de capítulos de livros produzidos no Direito")
 ```
 
 
@@ -650,7 +553,7 @@ periodicos_direito %>%
   ggplot(aes(x = ano, y = n)) +
   geom_bar(position = "stack", stat = "identity", fill = "steelblue")+
   geom_text(aes(label=n), vjust=-0.3) +
-  ylab("Número de periódiocos produzidos")
+  ylab("Número de periódiocos produzidos no Direito")
 ```
 
 Por esse gráficos podemos observar que a produção anual de periódicos e capítulos de livros são bem próximas, com exceção apenas do ano de 2010 e 2011, quando a produção de periódicos e capítulos de livros foram bem menores que nos outros anos.
@@ -675,120 +578,158 @@ Continuando a análise do nível de internacionalização, mas agora análisando
 ggplot(data = eventos_direito) +
   geom_bar(mapping = aes(x = ano_do_trabalho, fill = classificacao)) +
   xlab("Ano") +
-  ylab("Número de eventos")
+  ylab("Número de eventos do Direito")
 ```
+
 
 Nessa análise podemos observar que diferentemente das publicações internacionais de capítulos de livros, uma quantidade consideravel das participações em eventos de professores do Direito são em eventos internacionais. 
 
 
 
+
+
+
+
+
+
+
+
+Agora são feitas as análises estatísticas do curso de Comunicação.
+
+Na análise abaixo, foi feito um gráfico com o quantitativo de orientandos atuais e que já finalizaram. Para isso, foi feito uma contagem do número de orientações concluídas de cada tipo (mestrado, doutorado etc) e de orientandos que ainda não concluíram, isto é, que são atuais.
+
+
 ```{r echo=TRUE}
-conc_doutorado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_DOUTORADO))))
-conc_mestrado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_MESTRADO))))
-conc_pos_doc <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_POS_DOUTORADO))))
-conc_outras <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$OUTRAS_ORIENTACOES_CONCLUIDAS))))
+conc_doutorado <- sum(unlist(sapply(unb.prof_comunicacao,
+  function(x)nrow(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_DOUTORADO))))
+conc_mestrado <- sum(unlist(sapply(unb.prof_comunicacao, 
+  function(x)nrow(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_MESTRADO))))
+conc_pos_doc <- sum(unlist(sapply(unb.prof_comunicacao,
+  function(x)nrow(x$orientacoes_academicas$ORIENTACAO_CONCLUIDA_POS_DOUTORADO))))
+conc_outras <- sum(unlist(sapply(unb.prof_comunicacao,
+  function(x)nrow(x$orientacoes_academicas$OUTRAS_ORIENTACOES_CONCLUIDAS))))
 orientandos_concluidos <- conc_doutorado + conc_mestrado + conc_pos_doc + conc_outras
 
-atual_cientifica <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_INICIACAO_CIENTIFICA))))
-atual_doutorado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_DOUTORADO))))
-atual_graduacao <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_GRADUACAO))))
-atual_mestrado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_MESTRADO))))
-orientandos_atuais <- atual_cientifica + atual_doutorado + atual_graduacao + atual_mestrado
+atual_cientifica <- sum(unlist(sapply(unb.prof_comunicacao, function(x) 
+  nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_INICIACAO_CIENTIFICA))))
+atual_doutorado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) 
+  nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_DOUTORADO))))
+atual_graduacao <- sum(unlist(sapply(unb.prof_comunicacao, function(x) 
+  nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_GRADUACAO))))
+atual_mestrado <- sum(unlist(sapply(unb.prof_comunicacao, function(x) 
+  nrow(x$orientacoes_academicas$ORIENTACAO_EM_ANDAMENTO_MESTRADO))))
+orientandos_atuais <- atual_cientifica + atual_doutorado + atual_graduacao + 
+  atual_mestrado
 
-data <- data.frame(quantidade=c(orientandos_concluidos, orientandos_atuais), orientando=c("Orientandos Finalizados", "Orientandos Atuais"))
+data <- data.frame(quantidade=c(orientandos_concluidos, orientandos_atuais),
+                   orientando=c("Orientandos Finalizados", "Orientandos Atuais"))
 
-ggplot(data, aes(x = orientando,y=quantidade,fill = orientando)) +   xlab("Atual/Finalizado") +ylab("Quantidade")+
-  labs(title = "Quantidade de orientandos que já finalizaram e atuais") +  geom_bar(stat="identity")+theme_minimal()
+ggplot(data, aes(x = orientando,y=quantidade,fill = orientando)) +
+  xlab("Atual/Finalizado") +
+  ylab("Quantidade") +
+  labs(title = "Quantidade de orientandos de Comunicação que já finalizaram e atuais") +
+  geom_bar(stat="identity")+theme_minimal()
 
 orientandos_atuais + orientandos_concluidos + length(unb.prof_comunicacao)
 
 ```
 
+Percebe-se, pelo gráfico, que o número de orientandos que já finalizaram é bem superior aos atuais. O que leva a uma conclusão realista pois, há dados de vários anos anteriores, logo, a tendência é realmente ter mais orientados concluídos do que atuais.
 
-Para medir o nível de internacionalização, foi necessário analisar a produção bibliográfica
-de cada professor, mais especificamente a classificação do evento que eles tiveram essa
-produção bibliográfica, que pode variar entre local, regional, nacional e internacional.
+Para medir o nível de internacionalização, foi necessário analisar a produção bibliográfica de cada professor, mais especificamente a classificação do evento que eles tiveram essa produção bibliográfica, que pode variar entre local, regional, nacional e internacional.
 
 ```{r echo=TRUE}
 
-internacional <- sapply(unb.prof_comunicacao, function(x) x$producao_bibiografica$EVENTO$classificacao == "INTERNACIONAL")
+internacional <- sapply(unb.prof_comunicacao,
+  function(x) x$producao_bibiografica$EVENTO$classificacao == "INTERNACIONAL")
 num_internacional <- 0
 for (i in 1:length(internacional))
   num_internacional <- num_internacional + sum(internacional[[i]], na.rm=TRUE)
 
-nacional <- sapply(unb.prof_comunicacao, function(x) x$producao_bibiografica$EVENTO$classificacao == "NACIONAL")
+nacional <- sapply(unb.prof_comunicacao,
+  function(x) x$producao_bibiografica$EVENTO$classificacao == "NACIONAL")
 num_nacional <- 0
 for (i in 1:length(nacional))
   num_nacional <- num_nacional + sum(nacional[[i]], na.rm=TRUE)
 
-regional <- sapply(unb.prof_comunicacao, function(x) x$producao_bibiografica$EVENTO$classificacao == "REGIONAL")
+regional <- sapply(unb.prof_comunicacao,
+  function(x) x$producao_bibiografica$EVENTO$classificacao == "REGIONAL")
 num_regional <- 0
 for (i in 1:length(regional))
   num_regional <- num_regional + sum(regional[[i]], na.rm=TRUE)
 
-local <- sapply(unb.prof_comunicacao, function(x) x$producao_bibiografica$EVENTO$classificacao == "LOCAL")
+local <- sapply(unb.prof_comunicacao,
+  function(x) x$producao_bibiografica$EVENTO$classificacao == "LOCAL")
 num_local <- 0
 for (i in 1:length(local))
   num_local <- num_local + sum(local[[i]], na.rm=TRUE)
 
-df <- data.frame(classificacao=c("INTERNACIONAL", "NACIONAL", "REGIONAL", "LOCAL"), quantidade=c(num_internacional, num_nacional, num_regional, num_local))
-bp<- ggplot(df, aes(x="", y=quantidade, fill=classificacao))+geom_bar(width = 1, stat = "identity")
+df <- data.frame(classificacao=c("INTERNACIONAL", "NACIONAL", "REGIONAL", "LOCAL"), 
+    quantidade=c(num_internacional, num_nacional, num_regional, num_local))
+bp<- ggplot(df, aes(x="", y=quantidade, fill=classificacao)) +
+  labs(title = "Internacionalização do curso de Comunicação") +
+  geom_bar(width = 1, stat = "identity")
 pie <- bp + coord_polar("y", start=0)
 pie
 
 
 ```
 
+A partir desse gráfico de pizza gerado é possível concluir que há um bom nível de internacionalização do ramo acadêmico do curso de Comunicação da Universidade de Brasília.
 
 
+Neste momento são feitas as análises estatísticas do curso de Ciência da Informação.
 
 Como pode-se observar na imagem abaixo, ao pegar os dados das orientações concluídas, a maior quantidade de orientações concluídas veio dos trabalho de conclusão de curso de graduação e em segundo lugar as orientações de outras naturezas
 
 
 ```{r echo=TRUE}
-ggplot(concluido_ci, aes(x = natureza, fill = natureza)) + geom_bar() +xlab("Natureza") + ylab("Quantidade")
-
+ggplot(concluido_ci, aes(x = natureza, fill = natureza)) +
+  geom_bar() +
+  xlab("Natureza") +
+  ylab("Quantidade") +
+  labs(title = "Orientações concluidas no curso de Ciência da Informação")
 ```
 
 
 Utilizando-se uma função semelhante à utilizada acima, obteve-se o gráfico abaixo que mostra que as teses de doutorado estão em maior número, sendo seguidas pelas dissertações de mestrado, mostrando que quanto maior o aprofundamento da natureza de uma especialização, maior a chance de não se concluir a dissertação, como pode ser visto abaixo.
 
 ```{r echo=TRUE}
-ggplot(nao_concluido_ci, aes(x = natureza, fill = natureza)) + geom_bar() +xlab("Natureza") + ylab("Quantidade")
-
+ggplot(nao_concluido_ci, aes(x = natureza, fill = natureza)) +
+  geom_bar() +
+  xlab("Natureza") +
+  ylab("Quantidade") +
+  labs(title = "Orientações não concluidas no curso de Ciência da Informação")
 ```
 
 Após verificar a quantidade total de orientações, baseando-se na natureza dessas orientações, foi analisado essas quantidades em cada ano compreendido entre o período de 2010 a 2017. Ao fazer o confronto, na área de orientações concluídas, entre o ano x quantidade x natureza. Obteve-se um gráfico mostrando que a conclusão das dissertações de mestrado foi bastante expressiva ao longo dos anos. Quanto às orientações não concluídas, percebe-se que na maioria dos anos, poucos trabalhos de conclusão do curso de graduação não foram finalizados. Isso tudo pode-se ser observado utilizando-se a função ggplot() da seguinte maneira:
 
 
 ```{r echo=TRUE}
-ggplot(concluido_ci, aes(x = ano, fill = natureza)) + geom_bar() + ylab("Quantidade")
-
+ggplot(concluido_ci, aes(x = ano, fill = natureza)) +
+  geom_bar() +
+  ylab("Quantidade") +
+  labs(title = "Orientações concluidas por ano no curso de Ciência da Informação")
 ```
 
 A mesma função foi utilizada para as Orientações não concluídas, produzindo os dois gráficos abaixo, que confirmam a análise feita acima:
 
 
 ```{r echo=TRUE}
-ggplot(nao_concluido_ci, aes(x = ano, fill = natureza)) + geom_bar() + ylab("Quantidade")
-
+ggplot(nao_concluido_ci, aes(x = ano, fill = natureza)) +
+  geom_bar() +
+  ylab("Quantidade") +
+  labs(title = "Orientações não concluidas por ano no curso de Ciência da Informação")
 ```
 
 
-Além desse dados obtidos, foi verificado quais e quantos cursos concluíram as suas orientações. Isso foi feito, utilizando -se a função ggplot() da seguinte maneira: 
-
-```{r echo=TRUE}
-ggplot(concluido_ci, aes(x = ano, fill = curso)) + geom_dotplot()
-
-```
-
-
-Com este gráfico, pôde-se observar que na maioria dos anos, os cursos com o maior número de orientações, na área de Ciência da informação, concluídas foram os de Comunicação e Biblioteconomia. Já para as orientações não concluídas foi feita a seguinte operação:
+Além desse dados obtidos, foi verificado quais e quantos cursos não concluíram as suas orientações. Isso foi feito, utilizando a função ggplot() da seguinte maneira: 
 
 
 ```{r echo=TRUE}
-ggplot(nao_concluido_ci, aes(x = ano, fill = curso)) + geom_dotplot()
-
+ggplot(nao_concluido_ci, aes(x = ano, fill = curso)) +
+  geom_dotplot() +
+  labs(title = "Orientações não concluidas por programa da Ciência da Informação")
 ```
 
 
@@ -797,53 +738,12 @@ ggplot(nao_concluido_ci, aes(x = ano, fill = curso)) + geom_dotplot()
 
 #CRISP-DM Fase 5 - __Avaliação__
 
-Como já informado, na fase de __Avaliação__ do CRISP-DM os resultados não são apenas avaliados, mas se verifica se existem questões relacionadas à organização que não foram suficientemente abordadas. Deve-se refletir se o uso arepetido do modelo criado pode trazer algum “efeito colateral” para a organização. 
+Portanto, a análise desses dados permitiu ter uma base de entendimento interessante sobre os currículos de professores da UnB dos cursos de Ciência da Informação, Direito e Comunicação. Além de descobrir informações sobre orientações em vários âmbitos acadêmicos, de publicações em periódicos, livros, artigos, textos em jornais, de linhas de pesquisa e como esses dados são armazenados e como podem ser relacionados entre si.
 
-Como já informado, nesta fase, pode-se trabalhar com 3 atividades genéricas, a seguir distribuídas em seções.
 
-##CRISP-DM Fase.Atividade 5.1 - Avaliação dos resultados
-
-##CRISP-DM Fase.Atividade 5.2 - Revisão do processo
-
-Como já informado, durante a revisão do processo verifica-se se o modelo foi construído adequadamente. As variáveis (passadas) para construir o modelo estarão disponíveis no futuro?
-
-##CRISP-DM Fase.Atividade 5.3 -  Determinação dos etapas seguintes
-
-Como já informado, pode ser necessário decidir-se por finalizar o projeto, passar à etapa de desenvolvimento, ou rever algumas fases anteriores para a melhoria do projeto.
-
-#CRISP-DM Fase 6 - __Implantação__ (_deployment_)
-
-Como já informado, na fase de __Implantação__ (_deployment_) se realiza o planejamento de implantação dos produtos desenvolvidos (scripts, no caso do executado nesta disciplina) para o ambiente operacional, para seu uso repetitivo, envolvendo atividades de monitoramento e manutenção do sistema (script) desenvolvido. A fase de implantação concluir com a produção e apresentação do relatório final com os resultados do projeto.
-
-Como já informado, são seis as atividades genéricas na fase de __implantação__, a seguir apresentadas na forma de seções.
-
-##CRISP-DM Fase.Atividade 6.1 -  Planejamento da transição 
-
-De que forma os produtos desenvolvidos pelo grupo poderiam ser colocados em uso prático regular, na organização cliente?
-
-##CRISP-DM Fase.Atividade 6.2 -  Planejamento do monitoramento dos produtos 
-
-De que forma seria possível realizar o monitoramento do funcionamento dos produtos em utilização no ambiente operacional?
-
-##CRISP-DM Fase.Atividade 6.3 -  Planejamento de manuteção 
-
-que manutenções, ajustes, mudanças, poderia ter que ser eventualmente realizadas no produto (scripts), quando em uso no ambiente operacional do cliente?
-
-##CRISP-DM Fase.Atividade 6.4 -  Produção do relatório final
-
-A entrega do relatório do grupo, tomando como base este aqui, reflete  a execução desta etapa.
-
-##CRISP-DM Fase.Atividade 6.5 -  Apresentação do relatório final
-
-Como já informado, não será feita apresentação do relatório, mas esperamos que publicações científicas possam ser geradas com pelo seu grupo, com o apoio dos professores da disciplina.
-
-##CRISP-DM Fase.Atividade 6.6 -  Revisão sobre a execução do projeto
-
-Deve-se fazer aqui o registro de lições aprendidas, bem como traçadas perspectivas futuras de aprimoramento deste trabalho, da disciplina de Ciência de Dados para Todos etc.
 
 # Referências
 
-* Azevedo, Mário Luiz Neves de, João Ferreira de Oliveira, e Afrânio Mendes Catani. “O Sistema Nacional de Pós-Graduação (SNPG) e o Plano Nacional de Educação (PNE 2014-2024): regulação, avaliação e financiamento”. Revista Brasileira de Política e Administração da Educação 32, nº 3 (2016). http://dx.doi.org/10.21573/vol32n32016.68576.
 * Can, Fazli, Tansel Özyer, e Faruk Polat, orgs. State of the Art Applications of Social Network Analysis. Lecture Notes in Social Networks. Switzerland: Springer International Publishing, 2014.
 * CAPES. “Documentos de Área”. CAPES.gov.br. Acessado 12 de junho de 2018. http://avaliacaoquadrienal.capes.gov.br/documentos-de-area.
 * ———. “Plano Nacional de Pós-Graduação - PNPG 2011/2020 Vol. 1”. Brasília - DF, dezembro de 2010. http://www.capes.gov.br/images/stories/download/Livros-PNPG-Volume-I-Mont.pdf.
@@ -860,14 +760,5 @@ Deve-se fazer aqui o registro de lições aprendidas, bem como traçadas perspec
 * Kilduff, Martin, e Wenpin Tsai. Social Networks and Organizations. UK: Sage Publications, 2003.
 * Kolaczyk, Eric D., e Gábor Csárdi. Statistical Analysis of Network Data with R. USA: Springer, 2014.
 * Kuhn, Max, Jed Wing, Steve Weston, Andre Williams, Chris Keefer, Allan Engelhardt, Tony Cooper, et al. “Package ‘Caret’ - Classification and Regression Training”, 27 de maio de 2018. https://cran.r-project.org/web/packages/caret/caret.pdf.
-* Leite, Fernando César Lima. “Considerações básicas sobre  a Avaliação do Sistema  Nacional de Pós-Graduação”. Comunicação Pessoal (slides). Universidade de Brasília, abril de 2018. https://aprender.ead.unb.br/pluginfile.php/502250/mod_resource/content/1/Considera%C3%A7%C3%B5es%20b%C3%A1sicas%20sobre%20a%20Avalia%C3%A7%C3%A3o%20do%20Sistema%20Nacional.pdf.
-* Lusher, Dean, Johan Koskinen, e Garry Robins, orgs. Exponential Random Graph Models for Social Networks: Theory, methods, and applications. Structural Analysis in the Social Sciences. USA: Cambridge University Press, 2013.
-* Mariscal, Gonzalo, Óscar Marbán, e Covadonga Fernández. “A survey of data mining and knowledge discovery process models and methodologies”. The Knowledge Engineering Review 25, nº 2 (2010): 137–66. https://doi.org/10.1017/S0269888910000032.
-* Nery, Guilherme, Ana Paula Bragaglia, Flávia Clemente, e Suzana Barbosa. “Nem tudo parece o que é: Entenda o que é plágio”. Instituto de Arte e Comunicação Social da UFF, 2009. http://www.noticias.uff.br/arquivos/cartilha-sobre-plagio-academico.pdf.
-* Nooy, Wouter de, Andrej Mrvar, e Vladimir Batagelj. Exploratory Social Network Analysis with Pajek. Structural Analysis in the Social Sciences. USA: Routldge, 2005.
-* Pátaro, Cristina Saitê de Oliveira, e Frank Antonio Mezzomo. “Sistema Nacional de Pós-Graduação no Brasil: estrutura, resultados e desafios para política de Estado - Lívio Amaral”. Revista Educação e Linguagens 2, nº 3 (julho de 2013): 11–17.
-* Schwartzman, Simon. “A Ciência da Ciência”. Ciência Hoje 2, nº 11 (março de 1984): 54–59.
-* Silver, Nate. The Signal and the Noise: Why so many predictions fail — but some don’t. USA: The Penguin Press HC, 2012.
-* Vicari, Donatella, Akinori Okada, Giancarlo Ragozini, e Claus Wiehs. Analysis and Modeling of Complex Data in Behavioral and Social Sciences. Studies in Classifi cation, Data Analysis, and Knowledge Organization. Switzerland: Springer, 2014.
-* Wickham, Hadley, e Garrett Grolemund. R for Data Science: Import, Tidy, Transform, Visualize, and Model Data. USA: O’Reilly, 2016.
+
 
